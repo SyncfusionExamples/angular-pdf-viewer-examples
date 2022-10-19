@@ -40,7 +40,7 @@ export class AppComponent {
   public document: string = 'PDF_Succinctly.pdf';
   ngOnInit(): void {
   }
-  //Method to customize the resizer and annotation's appearance.
+  //Method to customize the appearance of all annotations.
   globalChange() {
     var viewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
     for (let i = 0; i < viewer.annotationCollection.length; i++) {
@@ -60,7 +60,7 @@ export class AppComponent {
     }
   }
 
-  //Method to customize the annotation's fill, stroke, font style.
+  //Method to customize the specific annotation's appearance.
   specificChange() {
     var viewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
     for (let i = 0; i < viewer.annotationCollection.length; i++) {
