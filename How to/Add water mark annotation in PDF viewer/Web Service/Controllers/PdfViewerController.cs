@@ -69,44 +69,26 @@ namespace PdfViewerLatestDemo.Controllers
                 }
             }
             //Water mark method
-            
-                PdfLoadedDocument loadedDocument = new PdfLoadedDocument(stream);
-                for (int pageCounter = 0; pageCounter < loadedDocument.PageCount; pageCounter++)
-                {
-                    PdfPageBase loadedPage = loadedDocument.Pages[pageCounter];
-
-                    PdfGraphics graphics = loadedPage.Graphics;
-
-                //    Adding an image watermark.
-
-                //    FileStream imageStream = new FileStream("syncfusion.png", FileMode.Open, FileAccess.Read);
-                //    PdfImage image = new PdfBitmap(imageStream);
-                //    PdfGraphicsState state = graphics.Save();
-                //    graphics.SetTransparency(0.25f);
-                //// graphics.DrawImage(image, new PointF(0, 0), loadedPage.Graphics.Size);
-
-
-                //    Adding a text watermark.
+            PdfLoadedDocument loadedDocument = new PdfLoadedDocument(stream);
+            for (int pageCounter = 0; pageCounter < loadedDocument.PageCount; pageCounter++)
+            {
+                PdfPageBase loadedPage = loadedDocument.Pages[pageCounter];
+                PdfGraphics graphics = loadedPage.Graphics;
                 //set the font
                 PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
-
                 // watermark text.
                 PdfGraphicsState state = graphics.Save();
                 graphics.SetTransparency(0.25f);
+                //Applies the specified rotation to the transformation matrix of this graphics
                 graphics.RotateTransform(-40);
+                //Draws the specified text string at the specified location with the specified brush and font objects.
                 graphics.DrawString("CONFIDENTIAL", font, PdfPens.Red, PdfBrushes.Red, new PointF(-150, 450));
-
             }
-
             MemoryStream str = new MemoryStream();
-
-                loadedDocument.Save(str);
-
-                loadedDocument.Close(true);
-
-                jsonResult = pdfviewer.Load(str, jsonObject);
-                return Content(JsonConvert.SerializeObject(jsonResult));
-            
+            loadedDocument.Save(str);
+            loadedDocument.Close(true);
+            jsonResult = pdfviewer.Load(str, jsonObject);
+            return Content(JsonConvert.SerializeObject(jsonResult));
         }
 
         [AcceptVerbs("Post")]
@@ -203,10 +185,12 @@ namespace PdfViewerLatestDemo.Controllers
                 string documentPath = GetDocumentPath(jsonObject["fileName"]);
                 if (!string.IsNullOrEmpty(documentPath))
                 {
+                    //Returns a string containing all the text in the file
                     jsonResult = System.IO.File.ReadAllText(documentPath);
                 }
                 else
                 {
+                    //Returns the created content result object for the response
                     return this.Content(jsonObject["document"] + " is not found");
                 }
             }
@@ -215,6 +199,7 @@ namespace PdfViewerLatestDemo.Controllers
                 string extension = Path.GetExtension(jsonObject["importedData"]);
                 if (extension != ".xfdf")
                 {
+                    //Gets the annotation from the document
                     JsonResult = pdfviewer.ImportAnnotation(jsonObject);
                     return Content(JsonConvert.SerializeObject(JsonResult));
                 }
@@ -223,6 +208,7 @@ namespace PdfViewerLatestDemo.Controllers
                     string documentPath = GetDocumentPath(jsonObject["importedData"]);
                     if (!string.IsNullOrEmpty(documentPath))
                     {
+                        //Returns a byte array containing the contents of the file
                         byte[] bytes = System.IO.File.ReadAllBytes(documentPath);
                         jsonObject["importedData"] = Convert.ToBase64String(bytes);
                         JsonResult = pdfviewer.ImportAnnotation(jsonObject);
@@ -246,6 +232,7 @@ namespace PdfViewerLatestDemo.Controllers
 
         {
             PdfRenderer pdfviewer = new PdfRenderer(_cache);
+            //Export the form fields value from the PDF documents
             string jsonResult = pdfviewer.ExportFormFields(jsonObject);
             return Content(jsonResult);
         }
@@ -259,6 +246,7 @@ namespace PdfViewerLatestDemo.Controllers
         {
             PdfRenderer pdfviewer = new PdfRenderer(_cache);
             jsonObject["data"] = GetDocumentPath(jsonObject["data"]);
+            //Import the form fields value from the PDF documents
             object jsonResult = pdfviewer.ImportFormFields(jsonObject);
             return Content(JsonConvert.SerializeObject(jsonResult));
         }
@@ -285,6 +273,7 @@ namespace PdfViewerLatestDemo.Controllers
         {
             //Initialize the PDF Viewer object with memory cache object
             PdfRenderer pdfviewer = new PdfRenderer(_cache);
+            //Gets the PDF document as base64 string
             string documentBase = pdfviewer.GetDocumentAsBase64(jsonObject);
             return Content(documentBase);
         }

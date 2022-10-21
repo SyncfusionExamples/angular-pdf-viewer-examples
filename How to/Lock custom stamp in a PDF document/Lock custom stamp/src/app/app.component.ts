@@ -51,7 +51,9 @@ export class AppComponent {
           j < data.annotationDetails[i].stampAnnotations.length;
           j++
         ) {
+          //Subject becomes null only for custom stamps
           if (data.annotationDetails[i].stampAnnotations[j].Subject == null) {
+            //Iterated the annotations and checked if subject is null then set islocked as true
             data.annotationDetails[i].stampAnnotations[j].IsLocked = true;
           }
         }

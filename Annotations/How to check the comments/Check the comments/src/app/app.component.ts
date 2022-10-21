@@ -38,6 +38,7 @@ import {
 export class AppComponent {
   public service: string =
     'https://localhost:5001/pdfviewer';
+  //Sets the document path of the PDF Viewer.  
   public document: string = 'PDF_Succinctly_Comments.pdf';
   ngOnInit(): void {
   }
