@@ -62,6 +62,6 @@ export class AppComponent {
   RemoveFreeText() {
     var pdfviewer = (<any>document.getElementById('pdfViewer'))
       .ej2_instances[0];
-    pdfviewer.annotationModule.setAnnotationMode('Circle');
+    pdfviewer.annotationModule.setAnnotationMode('None');
   }
 }
