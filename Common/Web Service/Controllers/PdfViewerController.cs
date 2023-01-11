@@ -105,7 +105,7 @@ namespace PdfViewerLatestDemo.Controllers
             //Create PDF graphics for the page
             PdfGraphics graphics = page.Graphics;
             //Load the image from the disk
-            byte[] buff = System.IO.File.ReadAllBytes(@"Data/images.jpg");
+            byte[] buff = System.IO.File.ReadAllBytes(@"wwwroot/Data/syncfusion.png");
             System.IO.MemoryStream ms = new System.IO.MemoryStream(buff);
             PdfBitmap image = new PdfBitmap(ms);
             //Draw the image
@@ -126,7 +126,7 @@ namespace PdfViewerLatestDemo.Controllers
         public IActionResult GetPdfStream()
         {
             // The path to the PDF document
-            string filePath = "Data/PDF_Succinctly.pdf";
+            string filePath = "wwwroot/Data/PDF_Succinctly.pdf";
             // Read the PDF document into a byte array
             byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
             // Convert the byte array to a base 64 string

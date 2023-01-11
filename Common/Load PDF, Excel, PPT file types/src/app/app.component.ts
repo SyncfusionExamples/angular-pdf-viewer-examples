@@ -23,7 +23,7 @@ import {
     PrintService]
 })
 export class AppComponent implements OnInit {
-  public service = 'https://localhost:44309/pdfviewer';
+  public service = 'https://localhost:44327/pdfviewer';
 
   ngOnInit(): void {
   }

@@ -12,7 +12,7 @@
   <script type="text/javascript">
     $('#btn1').click(function () {
       $.ajax({
-        url: 'https://localhost:44309/pdfviewer/GetPdfStream',
+        url: 'https://localhost:44327/pdfviewer/GetPdfStream',
         type: "GET",
         success: function (data) {
           viewer = document.getElementById('pdfViewer').ej2_instances[0];
@@ -24,7 +24,7 @@
   <script type="text/javascript">
     $('#btn2').click(function () {
       $.ajax({
-        url: 'https://localhost:44309/pdfviewer/GetImageStream',
+        url: 'https://localhost:44327/pdfviewer/GetImageStream',
         type: "GET",
         success: function (data) {
           viewer = document.getElementById('pdfViewer').ej2_instances[0];
