@@ -91,49 +91,6 @@ namespace PdfViewerLatestDemo.Controllers
             return Content(JsonConvert.SerializeObject(jsonResult));
         }
 
-        [AcceptVerbs("Get")]
-        [HttpGet("GetImageStream")]
-        [Route("[controller]/GetImageStream")]
-        //Post action for loading the Office products
-        public IActionResult GetImageStream()
-        {
-
-            //Create a new PDF document
-            Syncfusion.Pdf.PdfDocument doc = new Syncfusion.Pdf.PdfDocument();
-            //Add a page to the document
-            Syncfusion.Pdf.PdfPage page = doc.Pages.Add();
-            //Create PDF graphics for the page
-            PdfGraphics graphics = page.Graphics;
-            //Load the image from the disk
-            byte[] buff = System.IO.File.ReadAllBytes(@"Data/images.jpg");
-            System.IO.MemoryStream ms = new System.IO.MemoryStream(buff);
-            PdfBitmap image = new PdfBitmap(ms);
-            //Draw the image
-            graphics.DrawImage(image, 0, 0);
-            var stream = new MemoryStream();
-            doc.Save(stream);
-            byte[] bytes;
-            bytes = stream.ToArray();
-            string base64String = Convert.ToBase64String(bytes);
-            // Convert the byte array to a base 64 string
-            return Content("data:application/pdf;base64," + base64String);
-        }
-
-        [AcceptVerbs("Get")]
-        [HttpGet("GetPdfStream")]
-        [Route("[controller]/GetPdfStream")]
-        //Post action for loading the Office products
-        public IActionResult GetPdfStream()
-        {
-            // The path to the PDF document
-            string filePath = "Data/PDF_Succinctly.pdf";
-            // Read the PDF document into a byte array
-            byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
-            // Convert the byte array to a base 64 string
-            string base64String = Convert.ToBase64String(fileBytes);
-            return Content("data:application/pdf;base64," + base64String);
-        }
-
         [AcceptVerbs("Post")]
         [HttpPost("Bookmarks")]
         [Microsoft.AspNetCore.Cors.EnableCors("MyPolicy")]
