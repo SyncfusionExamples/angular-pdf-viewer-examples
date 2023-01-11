@@ -96,7 +96,6 @@ namespace PdfViewerLatestDemo.Controllers
         [Microsoft.AspNetCore.Cors.EnableCors("MyPolicy")]
         [Route("[controller]/Bookmarks")]
         //Post action for processing the bookmarks from the PDF documents
-
         public IActionResult Bookmarks([FromBody] Dictionary<string, string> jsonObject)
         {
             //Initialize the PDF Viewer object with memory cache object
@@ -104,8 +103,6 @@ namespace PdfViewerLatestDemo.Controllers
             var jsonResult = pdfviewer.GetBookmarks(jsonObject);
             return Content(JsonConvert.SerializeObject(jsonResult));
         }
-
-
 
         [AcceptVerbs("Post")]
         [HttpPost("RenderPdfPages")]
