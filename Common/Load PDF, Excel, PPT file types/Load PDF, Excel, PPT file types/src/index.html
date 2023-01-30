@@ -7,10 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"></script>
-  <input type="submit" value="Generate PDF" class="Button" id="btn1" />
-  <input type="submit" value="Generate Image" class="Button" id="btn2" />
+  <input type="submit" value="Generate PDF" class="Button" id="LoadPDF" />
+  <input type="submit" value="Generate Image" class="Button" id="LoadImage" />
   <script type="text/javascript">
-    $('#btn1').click(function () {
+    $('#LoadPDF').click(function () {
       $.ajax({
         url: 'https://localhost:44327/pdfviewer/GetPdfStream',
         type: "GET",
@@ -22,7 +22,7 @@
     });
   </script>
   <script type="text/javascript">
-    $('#btn2').click(function () {
+    $('#LoadImage').click(function () {
       $.ajax({
         url: 'https://localhost:44327/pdfviewer/GetImageStream',
         type: "GET",
