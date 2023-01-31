@@ -11,10 +11,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Web.Helpers;
 using Microsoft.Ajax.Utilities;
+using WFormatType = Syncfusion.DocIO.FormatType;
 using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
 using Syncfusion.Drawing;
 using Syncfusion.Pdf.Parsing;
+using Antlr.Runtime.Misc;
+using Syncfusion.DocIORenderer;
+using Syncfusion.Presentation;
+using Syncfusion.PresentationToPdfConverter;
+using Syncfusion.XlsIO;
+using Syncfusion.XlsIORenderer;
 
 namespace PdfViewerLatestDemo.Controllers
 {
@@ -91,32 +98,117 @@ namespace PdfViewerLatestDemo.Controllers
             return Content(JsonConvert.SerializeObject(jsonResult));
         }
 
-        [AcceptVerbs("Get")]
-        [HttpGet("GetImageStream")]
+        [AcceptVerbs("Post")]
+        [HttpPost("GetImageStream")]
         [Route("[controller]/GetImageStream")]
         //Post action for loading the Office products
-        public IActionResult GetImageStream()
+        public IActionResult GetImageStream([FromBody] Dictionary<string, string> jsonObject)
+        {
+            if (jsonObject.ContainsKey("data"))
+            {
+
+                string base64 = jsonObject["data"];
+                //string fileName = args.FileData[0].Name;
+                string type = jsonObject["type"];
+                string data = base64.Split(',')[1];
+                byte[] bytes = Convert.FromBase64String(data);
+                var outputStream = new MemoryStream();
+                Syncfusion.Pdf.PdfDocument pdfDocument = new Syncfusion.Pdf.PdfDocument();
+                using (Stream stream = new MemoryStream(bytes))
+                {
+                    switch (type)
+                    {
+                        case "docx":
+                        case "dot":
+                        case "doc":
+                        case "dotx":
+                        case "docm":
+                        case "dotm":
+                        case "rtf":
+                            Syncfusion.DocIO.DLS.WordDocument doc = new Syncfusion.DocIO.DLS.WordDocument(stream, GetWFormatType(type));
+                            //Instantiation of DocIORenderer for Word to PDF conversion
+                            DocIORenderer render = new DocIORenderer();
+                            //Converts Word document into PDF document
+                            pdfDocument = render.ConvertToPDF(doc);
+                            doc.Close();
+                            break;
+                        case "pptx":
+                        case "pptm":
+                        case "potx":
+                        case "potm":
+                            //Loads or open an PowerPoint Presentation
+                            IPresentation pptxDoc = Presentation.Open(stream);
+                            pdfDocument = PresentationToPdfConverter.Convert(pptxDoc);
+                            pptxDoc.Close();
+                            break;
+                        case "xlsx":
+                        case "xls":
+                            ExcelEngine excelEngine = new ExcelEngine();
+                            //Loads or open an existing workbook through Open method of IWorkbooks
+                            IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
+                            //Initialize XlsIO renderer.
+                            XlsIORenderer renderer = new XlsIORenderer();
+                            //Convert Excel document into PDF document
+                            pdfDocument = renderer.ConvertToPDF(workbook);
+                            workbook.Close();
+                            break;
+                        case "jpeg":
+                        case "jpg":
+                        case "png":
+                        case "bmp":
+                            //Add a page to the document
+                            PdfPage page = pdfDocument.Pages.Add();
+                            //Create PDF graphics for the page
+                            PdfGraphics graphics = page.Graphics;
+                            PdfBitmap image = new PdfBitmap(stream);
+                            //Draw the image
+                            graphics.DrawImage(image, 0, 0);
+                            break;
+                    }
+
+                }
+                pdfDocument.Save(outputStream); 
+                outputStream.Position = 0;
+                byte[] byteArray= outputStream.ToArray();
+                pdfDocument.Close();
+                outputStream.Close();
+
+                string base64String = Convert.ToBase64String(byteArray); 
+                return Content("data:application/pdf;base64," + base64String);
+
+                
+            }
+            return Content("data:application/pdf;base64," + "");
+        }
+        public void loadPDFdocument(byte[] bytes)
         {
 
-            //Create a new PDF document
-            Syncfusion.Pdf.PdfDocument doc = new Syncfusion.Pdf.PdfDocument();
-            //Add a page to the document
-            Syncfusion.Pdf.PdfPage page = doc.Pages.Add();
-            //Create PDF graphics for the page
-            PdfGraphics graphics = page.Graphics;
-            //Load the image from the disk
-            byte[] buff = System.IO.File.ReadAllBytes(@"wwwroot/Data/syncfusion.png");
-            System.IO.MemoryStream ms = new System.IO.MemoryStream(buff);
-            PdfBitmap image = new PdfBitmap(ms);
-            //Draw the image
-            graphics.DrawImage(image, 0, 0);
-            var stream = new MemoryStream();
-            doc.Save(stream);
-            byte[] bytes;
-            bytes = stream.ToArray();
-            string base64String = Convert.ToBase64String(bytes);
-            // Convert the byte array to a base 64 string
-            return Content("data:application/pdf;base64," + base64String);
+           
+        }
+
+        public static WFormatType GetWFormatType(string format)
+        {
+            if (string.IsNullOrEmpty(format))
+                throw new NotSupportedException("EJ2 DocumentEditor does not support this file format.");
+            switch (format.ToLower())
+            {
+                case "dotx":
+                    return WFormatType.Dotx;
+                case "docx":
+                    return WFormatType.Docx;
+                case "docm":
+                    return WFormatType.Docm;
+                case "dotm":
+                    return WFormatType.Dotm;
+                case "dot":
+                    return WFormatType.Dot;
+                case "doc":
+                    return WFormatType.Doc;
+                case "rtf":
+                    return WFormatType.Rtf;
+                default:
+                    throw new NotSupportedException("EJ2 DocumentEditor does not support this file format.");
+            }
         }
 
         [AcceptVerbs("Get")]
