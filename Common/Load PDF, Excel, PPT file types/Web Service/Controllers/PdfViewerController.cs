@@ -126,7 +126,7 @@ namespace PdfViewerLatestDemo.Controllers
                         case "dotm":
                         case "rtf":
                             Syncfusion.DocIO.DLS.WordDocument doc = new Syncfusion.DocIO.DLS.WordDocument(stream, GetWFormatType(type));
-                            //Instantiation of DocIORenderer for Word to PDF conversion
+                            //Initialization of DocIORenderer for Word to PDF conversion
                             DocIORenderer render = new DocIORenderer();
                             //Converts Word document into PDF document
                             pdfDocument = render.ConvertToPDF(doc);
