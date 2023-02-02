@@ -13,7 +13,8 @@ import {
     `<div class="content-wrapper">
                 <ejs-pdfviewer id="pdfViewer"
                        [serviceUrl]='service'
-                       style="height:640px;display:block">
+                       style="height:640px;display:block"
+                       [toolbarSettings]="toolbarSettings">
                 </ejs-pdfviewer>
              </div>`,
 
@@ -24,7 +25,23 @@ import {
 })
 export class AppComponent implements OnInit {
   public service = 'https://localhost:44327/pdfviewer';
-
+  public toolbarSettings = {
+    showTooltip: true,
+    toolbarItems: [
+      "DownloadOption",
+      "UndoRedoTool",
+      "PageNavigationTool",
+      "MagnificationTool",
+      "PanTool",
+      "SelectionTool",
+      "CommentTool",
+      "SubmitForm",
+      "SearchOption",
+      "AnnotationEditTool",
+      "FormDesignerEditTool",
+      "PrintOption"
+    ]
+  };
   ngOnInit(): void {
   }
 }
