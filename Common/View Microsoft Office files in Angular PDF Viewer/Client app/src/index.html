@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>View Microsoft Office Files</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"></script>
+
+  <script src="https://cdn.syncfusion.com/ej2/20.3.47/dist/ej2.min.js" type="text/javascript"></script>
+  <link href="https://cdn.syncfusion.com/ej2/20.3.47/material.css" rel="stylesheet" />
+  
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
+  <br>
+  <br>
+  <br>
+  <div class="col-lg-8 control-section">
+    <div class="control_wrapper">
+      <!-- Initialize Uploader -->
+      <div id="dropArea" style="height: auto; overflow: auto">
+        <span id="drop">
+          Drop files (Word, Excel, PowerPoint, Image, PDF)
+          <a href="" id="browse"><u>Browse</u></a></span>
+        <input type="file" name="UploadFiles" id="fileupload" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var dropElement = document.getElementById('dropArea');
+    var uploadObj = new ej.inputs.Uploader({
+      asyncSettings: {
+        saveUrl: 'https://ej2.syncfusion.com/services/api/uploadbox/Save',
+        removeUrl: 'https://ej2.syncfusion.com/services/api/uploadbox/Remove',
+      },
+      dropArea: dropElement,
+      selected: onSelect,
+      progress: onFileUpload,
+      removing: onFileRemove,
+      allowedExtensions: '.doc, .docx, .rtf, .docm, .dotm, .dotx, .dot, .xls, .xlsx, .pptx, .pptm, .potx, .potm .jpeg, .png, .bmp, .pdf',
+      template: 'template',
+    });
+    uploadObj.appendTo('#fileupload');
+
+    var parentElement;
+    var filesName = [];
+    var progressbarContainer;
+    if (ej.base.Browser.isDevice) {
+      document.getElementById('drop').style.padding = '0px 10%';
+    }
+    document.getElementById('browse').onclick = function () {
+      document
+        .getElementsByClassName('e-file-select-wrap')[0]
+        .querySelector('button')
+        .click();
+      return false;
+    };
+
+    function onSelect(args) {
+      if (!dropElement.querySelector('li')) {
+        this.filesData = [];
+      }
+      if (
+        ej.base.isNullOrUndefined(
+          document.getElementById('dropArea').querySelector('.e-upload-files')
+        )
+      ) {
+        parentElement = ej.base.createElement('ul', {
+          className: 'e-upload-files',
+        });
+        document.getElementsByClassName('e-upload')[0].appendChild(parentElement);
+      }
+      var validFiles = validateFiles(args, this.filesData);
+      if (validFiles.length === 0) {
+        args.cancel = true;
+        return;
+      }
+      for (var i = 0; i < validFiles.length; i++) {
+        formSelectedData(validFiles[i], this);
+      }
+      this.filesData = this.filesData.concat(validFiles);
+      args.cancel = true;
+    }
+
+    function validateFiles(args, viewedFiles) {
+      var modifiedFiles = [];
+      var validFiles = [];
+      var isModified = false;
+      if (args.event.type === 'drop') {
+        isModified = true;
+        var allImages = ['doc', 'docx', 'rtf', 'docm', 'dotm', 'dotx', 'dot', 'xls', 'xlsx', 'pptx', 'pptm', 'potx',
+          'potm', 'jpeg', 'png', 'bmp', 'pdf'
+        ];
+        var chooseFiles = args.filesData;
+        for (var i = 0; i < chooseFiles.length; i++) {
+          var selectFile = chooseFiles[i];
+          if (allImages.indexOf(selectFile.type) !== -1) {
+            modifiedFiles.push(selectFile);
+          }
+        }
+      }
+      var files =
+        modifiedFiles.length > 0 || isModified ? modifiedFiles : args.filesData;
+      if (filesName.length > 0) {
+        for (var j = 0; j < files.length; j++) {
+          var file = files[j];
+          if (filesName.indexOf(file.name) === -1) {
+            filesName.push(file.name);
+            validFiles.push(file);
+          }
+        }
+      } else {
+        for (var k = 0; k < files.length; k++) {
+          var validFile = files[k];
+          filesName.push(validFile.name);
+          validFiles.push(validFile);
+        }
+      }
+      return validFiles;
+    }
+
+    function formSelectedData(file, proxy) {
+      var liEle = ej.base.createElement('li', {
+        className: 'e-upload-file-list',
+        attrs: {
+          'data-file-name': file.name
+        },
+      });
+
+      readURL(liEle, file);
+      proxy.fileList.push(liEle);
+    }
+
+    function uploadFile(args) {
+      uploadObj.upload([
+        this.filesData[this.fileList.indexOf(args.currentTarget.parentElement)],
+      ]);
+    }
+
+    function onFileUpload(args) {
+      var li = document
+        .getElementById('dropArea')
+        .querySelector('[data-file-name="' + args.file.name + '"]');
+      var iconEle = li.querySelector('#iconUpload');
+      iconEle.style.cursor = 'not-allowed';
+      iconEle.classList.add('e-uploaded');
+      ej.base.EventHandler.remove(
+        li.querySelector('#iconUpload'),
+        'click',
+        uploadFile
+      );
+      var progressValue = Math.round((args.e.loaded / args.e.total) * 100);
+      if (!isNaN(progressValue) && li.querySelector('.progressbar')) {
+        li.getElementsByTagName('progress')[0].value = progressValue;
+      }
+    }
+
+    function onFileRemove(args) {
+      args.postRawFile = false;
+    }
+
+    function readURL(li, args) {
+      var file = args.rawFile;
+      var reader = new FileReader();
+      debugger
+      var type = args.type;
+      reader.addEventListener('load', function () {
+        let post = JSON.stringify({
+          'data': reader.result,
+          'type': type
+        })
+        const url = "https://localhost:44327/pdfviewer/LoadFile"
+        let xhr = new XMLHttpRequest()
+        xhr.open('Post', url, true)
+        xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+        xhr.send(post);
+        xhr.onload = function (args) {
+          viewer = document.getElementById('pdfViewer').ej2_instances[0];
+          viewer.documentPath = this.responseText;
+        }
+      },
+        false
+      );
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    }
+  </script>
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
