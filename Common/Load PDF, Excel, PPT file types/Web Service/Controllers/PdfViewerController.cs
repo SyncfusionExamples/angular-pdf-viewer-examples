@@ -4,24 +4,18 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
-using Syncfusion.EJ2.PdfViewer;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using System.Web.Helpers;
-using Microsoft.Ajax.Utilities;
 using WFormatType = Syncfusion.DocIO.FormatType;
 using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
 using Syncfusion.Drawing;
 using Syncfusion.Pdf.Parsing;
-using Antlr.Runtime.Misc;
 using Syncfusion.DocIORenderer;
 using Syncfusion.Presentation;
 using Syncfusion.PresentationToPdfConverter;
 using Syncfusion.XlsIO;
 using Syncfusion.XlsIORenderer;
+using Syncfusion.EJ2.PdfViewer;
 
 namespace PdfViewerLatestDemo.Controllers
 {
@@ -30,9 +24,9 @@ namespace PdfViewerLatestDemo.Controllers
     public class PdfViewerController : Controller
     {
         private IHostingEnvironment _hostingEnvironment;
+
         //Initialize the memory cache object   
         public IMemoryCache _cache;
-
 
         public PdfViewerController(IHostingEnvironment hostingEnvironment, IMemoryCache cache)
 
@@ -75,22 +69,28 @@ namespace PdfViewerLatestDemo.Controllers
                     stream = new MemoryStream(bytes);
                 }
             }
+
             //Water mark method
             PdfLoadedDocument loadedDocument = new PdfLoadedDocument(stream);
             for (int pageCounter = 0; pageCounter < loadedDocument.PageCount; pageCounter++)
             {
                 PdfPageBase loadedPage = loadedDocument.Pages[pageCounter];
                 PdfGraphics graphics = loadedPage.Graphics;
+
                 //set the font
                 PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
+
                 // watermark text.
                 PdfGraphicsState state = graphics.Save();
                 graphics.SetTransparency(0.25f);
+
                 //Applies the specified rotation to the transformation matrix of this graphics
                 graphics.RotateTransform(-40);
+
                 //Draws the specified text string at the specified location with the specified brush and font objects.
                 graphics.DrawString("CONFIDENTIAL", font, PdfPens.Red, PdfBrushes.Red, new PointF(-150, 450));
             }
+
             MemoryStream str = new MemoryStream();
             loadedDocument.Save(str);
             loadedDocument.Close(true);
@@ -99,10 +99,10 @@ namespace PdfViewerLatestDemo.Controllers
         }
 
         [AcceptVerbs("Post")]
-        [HttpPost("GetImageStream")]
-        [Route("[controller]/GetImageStream")]
+        [HttpPost("LoadFile")]
+        [Route("[controller]/LoadFile")]
         //Post action for loading the Office products
-        public IActionResult GetImageStream([FromBody] Dictionary<string, string> jsonObject)
+        public IActionResult LoadFile([FromBody] Dictionary<string, string> jsonObject)
         {
             if (jsonObject.ContainsKey("data"))
             {
@@ -180,16 +180,11 @@ namespace PdfViewerLatestDemo.Controllers
             }
             return Content("data:application/pdf;base64," + "");
         }
-        public void loadPDFdocument(byte[] bytes)
-        {
-
-
-        }
 
         public static WFormatType GetWFormatType(string format)
         {
             if (string.IsNullOrEmpty(format))
-                throw new NotSupportedException("EJ2 DocumentEditor does not support this file format.");
+                throw new NotSupportedException("This is not a valid Word documnet.");
             switch (format.ToLower())
             {
                 case "dotx":
@@ -207,7 +202,7 @@ namespace PdfViewerLatestDemo.Controllers
                 case "rtf":
                     return WFormatType.Rtf;
                 default:
-                    throw new NotSupportedException("EJ2 DocumentEditor does not support this file format.");
+                    throw new NotSupportedException("This is not a valid Word documnet.");
             }
         }
 
