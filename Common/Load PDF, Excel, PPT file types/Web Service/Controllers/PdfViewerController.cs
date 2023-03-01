@@ -167,23 +167,23 @@ namespace PdfViewerLatestDemo.Controllers
                     }
 
                 }
-                pdfDocument.Save(outputStream); 
+                pdfDocument.Save(outputStream);
                 outputStream.Position = 0;
-                byte[] byteArray= outputStream.ToArray();
+                byte[] byteArray = outputStream.ToArray();
                 pdfDocument.Close();
                 outputStream.Close();
 
-                string base64String = Convert.ToBase64String(byteArray); 
+                string base64String = Convert.ToBase64String(byteArray);
                 return Content("data:application/pdf;base64," + base64String);
 
-                
+
             }
             return Content("data:application/pdf;base64," + "");
         }
         public void loadPDFdocument(byte[] bytes)
         {
 
-           
+
         }
 
         public static WFormatType GetWFormatType(string format)
