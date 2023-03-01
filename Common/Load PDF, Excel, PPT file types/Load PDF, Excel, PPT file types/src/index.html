@@ -141,8 +141,6 @@
       ]);
     }
 
-
-
     function onFileUpload(args) {
       var li = document
         .getElementById('dropArea')
@@ -178,7 +176,7 @@
             'data': reader.result,
             'type': type
           })
-          const url = "https://localhost:44327/pdfviewer/GetImageStream"
+          const url = "https://localhost:44327/pdfviewer/LoadFile"
           let xhr = new XMLHttpRequest()
           xhr.open('Post', url, true)
           xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
