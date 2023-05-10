@@ -1,5 +1,4 @@
-﻿using Amazon.S3;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -71,18 +70,17 @@ namespace PdfViewerService2.Controllers
         [HttpGet("GetDocumentfromAWSS3")]
         [Route("[controller]/GetDocumentfromAWSS3")]
 
+        [AcceptVerbs("Get")]
+        [HttpGet("GetDocumentfromAWSS3")]
+        [Route("[controller]/GetDocumentfromAWSS3")]
         public async Task<IActionResult> GetDocumentfromAWSS3()
         {
-            // Initialize the PDF viewer object with memory cache object
-            PdfRenderer pdfviewer = new PdfRenderer(_cache);
-            object jsonResult = new object();
             RegionEndpoint bucketRegion = RegionEndpoint.USEast1;
             // Configure the AWS SDK with your access credentials and other settings
-            var s3Client = new AmazonS3Client("AKIASCRGFNWJDZGVRDHV", "tF/uJO6Qk0UKbl8fyAphP24aoDlXoBLOUDzArIB8", bucketRegion);
-           // var s3Client = new AmazonS3Client("YOUR_ACCESS_KEY", "YOUR_SECRET_KEY", bucketRegion);
-            string document = "Output.pdf";
+            var s3Client = new AmazonS3Client("YOUR_ACCESS_KEY", "YOUR_SECRET_KEY", bucketRegion);
+            string document = "YOUR_DOCUMENT_NAME.pdf";
             // Specify the document name or retrieve it from a different source
-            var response = await s3Client.GetObjectAsync("bucket35789", document);
+            var response = await s3Client.GetObjectAsync("YOUR_BUCKET_NAME", document);
             Stream responseStream = response.ResponseStream;
             MemoryStream memStream = new MemoryStream();
             responseStream.CopyTo(memStream);
