@@ -257,10 +257,10 @@ namespace ControllerPractice.Controllers
         }
 
         [AcceptVerbs("Get")]
-        [HttpGet("GetDocument")]
-        [Route("[controller]/GetDocument")]
+        [HttpGet("GetDocumentfromAzure")]
+        [Route("[controller]/GetDocumentfromAzure")]
 
-        public IActionResult GetDocument()
+        public IActionResult GetDocumentfromAzure()
         {
             //Connection String of Storage Account
             string _connectionString = "Here Place Your Connection string";
@@ -268,7 +268,7 @@ namespace ControllerPractice.Controllers
             //Container Name
             string _containerName = "Here Place Your container string";
             //File Name to be loaded into Syncfusion PDF Viewer
-            string fileName = "PDF_Succinctly.pdf";
+            string fileName = "Here Place Your Connection document name.pdf";
             // Get a reference to the container
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(_containerName);
             BlockBlobClient blockBlobClient = containerClient.GetBlockBlobClient(fileName);
