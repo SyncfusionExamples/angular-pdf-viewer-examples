@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
-namespace PdfViewerService2.Controllers
+namespace RedisCache.Controllers
 {
     [Route("[controller]")]
     [ApiController]
