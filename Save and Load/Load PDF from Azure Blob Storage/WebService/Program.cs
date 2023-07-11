@@ -1,26 +1,40 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.ResponseCompression;
+using Newtonsoft.Json.Serialization;
 
-namespace ControllerPractice
+var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "MyPolicy";
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+    // Use the default property (Pascal) casing
+    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                        builder => {
+                            builder.AllowAnyOrigin()
+                              .AllowAnyMethod()
+                              .AllowAnyHeader();
+                        });
+});
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
-}
+builder.Services.AddMemoryCache();
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
+builder.Services.AddResponseCompression();
+
+var app = builder.Build();
+
+//Register Syncfusion license
+string licenseKey = string.Empty;
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(licenseKey);
+
+app.UseHttpsRedirection();
+app.UseCors(MyAllowSpecificOrigins);
+app.UseAuthorization();
+
+app.UseResponseCompression();
+app.MapControllers();
+
+app.Run();
