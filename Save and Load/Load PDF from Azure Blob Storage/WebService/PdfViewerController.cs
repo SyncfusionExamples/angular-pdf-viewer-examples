@@ -19,14 +19,22 @@ namespace PdfViewerWebService
         private IWebHostEnvironment _hostingEnvironment;
         //Initialize the memory cache object   
         public IMemoryCache _cache;
-        public PdfViewerController(IWebHostEnvironment hostingEnvironment, IMemoryCache cache)
+        private readonly string _storageConnectionString;
+        private readonly string _storageContainerName;
+        private readonly ILogger<PdfViewerController> _logger;
+        public PdfViewerController(IWebHostEnvironment hostingEnvironment, IMemoryCache cache, IConfiguration configuration, ILogger<PdfViewerController> logger)
         {
             _hostingEnvironment = hostingEnvironment;
             _cache = cache;
-            Console.WriteLine("PdfViewerController initialized");
-        }
+            _storageConnectionString = configuration.GetValue<string>("connectionString");
+            _storageContainerName = configuration.GetValue<string>("containerName");
+            _logger = logger;
 
-        [HttpPost("Load")]
+            Console.WriteLine("PdfViewerController initialized");
+    }
+
+
+    [HttpPost("Load")]
         [Microsoft.AspNetCore.Cors.EnableCors("MyPolicy")]
         [Route("[controller]/Load")]
         //Post action for Loading the PDF documents   
@@ -42,14 +50,9 @@ namespace PdfViewerWebService
             {
                 if (bool.TryParse(jsonObject["isFileName"], out bool isFileName) && isFileName)
                 {
-                    //Connection String of Storage Account
-                    string _connectionString = "Here Place Your Connection string";
-                    // Create a BlobServiceClient object by passing the connection string.
-                    BlobServiceClient blobServiceClient = new BlobServiceClient(_connectionString);
-                    // Get a reference to the container
-                    string _containerName = "Here Place Your container string";
+                    BlobServiceClient blobServiceClient = new BlobServiceClient(_storageConnectionString);
                     string fileName = jsonObject["document"];
-                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(_containerName);
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(_storageContainerName);
                     BlockBlobClient blockBlobClient = containerClient.GetBlockBlobClient(fileName);
                     MemoryStream memoryStream = new MemoryStream();
                     blockBlobClient.DownloadTo(memoryStream);
@@ -236,12 +239,32 @@ namespace PdfViewerWebService
         [HttpPost("Download")]
         [Microsoft.AspNetCore.Cors.EnableCors("MyPolicy")]
         [Route("[controller]/Download")]
-        //Post action for downloading the PDF documents
-        public IActionResult Download([FromBody] Dictionary<string, string> jsonObject)
+        //Post action for downloading the PDF documents
+        public IActionResult Download([FromBody] Dictionary<string, string> jsonObject)
         {
-            //Initialize the PDF Viewer object with memory cache object
+            // Initialize the PDF Viewer object with memory cache object
             PdfRenderer pdfviewer = new PdfRenderer(_cache);
             string documentBase = pdfviewer.GetDocumentAsBase64(jsonObject);
+            string document = jsonObject["documentId"];
+            string fileName = jsonObject["hashId"];
+
+            // Create a BlobServiceClient object
+            BlobServiceClient blobServiceClient = new BlobServiceClient(_storageConnectionString);
+
+            // Get a reference to the blob container
+            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(_storageContainerName);
+
+            // Get a reference to the blob
+            BlobClient blobClient = containerClient.GetBlobClient(document);
+
+            // Convert the document base64 string to bytes
+            byte[] bytes = Convert.FromBase64String(fileName);
+
+            // Upload the document to Azure Blob Storage
+            using (MemoryStream stream = new MemoryStream(bytes))
+            {
+                blobClient.Upload(stream, true);
+            }
             return Content(documentBase);
         }
 
