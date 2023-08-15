@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using SkiaSharp;
 using Syncfusion.EJ2.PdfViewer;
 using System;
 using System.Collections.Generic;
@@ -45,20 +46,21 @@ namespace PdfViewerWebService
                         byte[] bytes = System.IO.File.ReadAllBytes(documentPath);
                         stream = new MemoryStream(bytes);
                     }
-                    string documentName = jsonObject["document"];
-                    string result = Path.GetFileNameWithoutExtension(documentName);
-                    string fileName = result + "_downloaded.pdf";
-
-                    // Save the file on the server Replace the path you want to save the document
-                    string serverFilePath = @"wwwroot/Data/";
-
-                    string filePath = Path.Combine(serverFilePath, fileName);
-
-                    using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                    else
                     {
-                        //Saving the new file in root path of application
-                        stream.CopyTo(fileStream);
-                        fileStream.Close();
+                        string fileName = jsonObject["document"].Split(new string[] { "://" }, StringSplitOptions.None)[0];
+
+                        if (fileName == "http" || fileName == "https")
+                        {
+                            WebClient WebClient = new WebClient();
+                            byte[] pdfDoc = WebClient.DownloadData(jsonObject["document"]);
+                            stream = new MemoryStream(pdfDoc);
+                        }
+
+                        else
+                        {
+                            return this.Content(jsonObject["document"] + " is not found");
+                        }
                     }
                 }
                 else
@@ -241,6 +243,24 @@ namespace PdfViewerWebService
             //Initialize the PDF Viewer object with memory cache object
             PdfRenderer pdfviewer = new PdfRenderer(_cache);
             string documentBase = pdfviewer.GetDocumentAsBase64(jsonObject);
+            MemoryStream stream = new MemoryStream();
+
+            string documentName = jsonObject["documentId"];
+            string result = Path.GetFileNameWithoutExtension(documentName);
+            string fileName = result + "_downloaded.pdf";
+
+            // Save the file on the server
+			// replace your file path to save the file in the desired location
+            string serverFilePath = @"wwwroot/Data/";
+
+            string filePath = Path.Combine(serverFilePath, fileName);
+
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                //Saving the new file in root path of application
+                stream.CopyTo(fileStream);
+                fileStream.Close();
+            }
             return Content(documentBase);
         }
 
