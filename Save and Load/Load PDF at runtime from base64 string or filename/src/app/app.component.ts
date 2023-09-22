@@ -10,6 +10,8 @@ import {
   NavigationService, 
   TextSearchService, 
   TextSelectionService, 
+  FormFieldsService,
+  FormDesignerService,
   PrintService
 } from '@syncfusion/ej2-angular-pdfviewer';
 
@@ -20,7 +22,11 @@ import {
   <button (click)="LoadDocumentFromBase64()">LoadDocumentFromBase64</button>
     <button (click)="LoadDocument()">LoadDocument</button>
     <div class="content-wrapper">
-        <ejs-pdfviewer id="pdfViewer" [serviceUrl]='service' [documentPath]='document' style="height:640px;display:block"></ejs-pdfviewer>
+        <ejs-pdfviewer 
+          id="pdfViewer" 
+          [documentPath]='document' 
+          style="height:640px;display:block">
+        </ejs-pdfviewer>
     </div>
 </div>`,
   providers: [
@@ -33,14 +39,16 @@ import {
     NavigationService, 
     TextSearchService, 
     TextSelectionService, 
+    FormFieldsService,
+    FormDesignerService,
     PrintService
   ]
 })
 
 export class AppComponent implements OnInit {
-  public service: string =
-  'https://ej2services.syncfusion.com/production/web-services/api/pdfviewer';
-public document: string = '';
+  // To utilize the server-backed PDF Viewer, need to specify the service URL. Within the template, configure the PDF Viewer by adding the **[serviceUrl]='service'** attribute inside the div element.
+ // public service: string = 'https://ej2services.syncfusion.com/production/web-services/api/pdfviewer';
+  public document: string = '';
 ngOnInit(): void {
 }
 LoadDocumentFromBase64() {
@@ -54,6 +62,6 @@ LoadDocumentFromBase64() {
 LoadDocument() {
   // Load PDF document using file name
   var viewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
-  viewer.load('PDF_Succinctly.pdf', null);
+  viewer.load('https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf', null);
 }
 }
