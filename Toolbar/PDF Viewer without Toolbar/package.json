@@ -18,7 +18,7 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
-    "@syncfusion/ej2-angular-pdfviewer": "^20.2.50",
+    "@syncfusion/ej2-angular-pdfviewer": "^23.1.36",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
