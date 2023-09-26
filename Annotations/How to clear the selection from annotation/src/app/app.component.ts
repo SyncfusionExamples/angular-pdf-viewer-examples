@@ -12,6 +12,7 @@ import {
   PrintService,
   AnnotationService,
   FormFieldsService,
+  FormDesignerService
 } from '@syncfusion/ej2-angular-pdfviewer';
 
 /**
@@ -33,18 +34,22 @@ import {
     PrintService,
     AnnotationService,
     FormFieldsService,
+    FormDesignerService
   ],
 })
 export class AppComponent {
-  public service: string =
-    'https://ej2services.syncfusion.com/production/web-services/api/pdfviewer';
-  public document: string = 'PDF_Succinctly.pdf';
+
+  // To utilize the server-backed PDF Viewer, need to specify the service URL. This can be done by including the **[serviceUrl]='service'** attribute within the <ejs-pdfviewer></ejs-pdfviewer> component in app.component.html file.
+  //public service: string ='https://ej2services.syncfusion.com/production/web-services/api/pdfviewer';
+
+  public document: string = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
+
   ngOnInit(): void {
   }
+
   //Method to add free text annotation programmatically.
   AddFreeText() {
-    var pdfviewer = (<any>document.getElementById('pdfViewer'))
-      .ej2_instances[0];
+    var pdfviewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
     pdfviewer.freeTextSettings.width = 200;
     pdfviewer.freeTextSettings.height = 50;
     pdfviewer.freeTextSettings.textAlignment = 'Center';

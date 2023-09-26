@@ -9,6 +9,8 @@ import {
   AnnotationService,
   TextSearchService,
   TextSelectionService,
+  FormFieldsService,
+  FormDesignerService,
   PrintService
 } from '@syncfusion/ej2-angular-pdfviewer';
 
@@ -32,11 +34,13 @@ import {
     AnnotationService,
     TextSearchService,
     TextSelectionService,
+    FormFieldsService,
+    FormDesignerService,
     PrintService]
 })
 export class AppComponent implements OnInit {
   public service = 'https://ej2services.syncfusion.com/production/web-services/api/pdfviewer';
-  public document = 'PDF_Succinctly.pdf';
+  public document = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
   ngOnInit(): void {
   }
 }

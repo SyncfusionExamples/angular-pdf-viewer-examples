@@ -44,7 +44,7 @@ import {
 
 export class AppComponent implements OnInit {
 public service = 'https://localhost:44309/pdfviewer';
-public document = 'FormDesigner.pdf';
+public document = 'https://cdn.syncfusion.com/content/pdf/form-designer.pdf';
 ngOnInit(): void {
 }
 save() {

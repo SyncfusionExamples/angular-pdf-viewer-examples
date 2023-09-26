@@ -3,7 +3,7 @@ import {
   LinkAnnotationService, BookmarkViewService, MagnificationService,
   ThumbnailViewService, ToolbarService, NavigationService,
   AnnotationService, TextSearchService, TextSelectionService,
-  PrintService
+  PrintService, FormFieldsService, FormDesignerService
 } from '@syncfusion/ej2-angular-pdfviewer';
 
 @Component({
@@ -21,10 +21,12 @@ import {
   providers: [LinkAnnotationService, BookmarkViewService, MagnificationService,
     ThumbnailViewService, ToolbarService, NavigationService,
     AnnotationService, TextSearchService, TextSelectionService,
-    PrintService]
+    PrintService, FormFieldsService, FormDesignerService]
 })
 export class AppComponent implements OnInit {
-  public service = 'https://localhost:44327/pdfviewer';
+  // To utilize the server-backed PDF Viewer, need to specify the service URL. This can be done by including the **[serviceUrl]='service'** attribute within the <ejs-pdfviewer></ejs-pdfviewer> component in app.component.html file.
+  //public service = 'https://localhost:44327/pdfviewer';
+  
   public toolbarSettings = {
     showTooltip: true,
     toolbarItems: [

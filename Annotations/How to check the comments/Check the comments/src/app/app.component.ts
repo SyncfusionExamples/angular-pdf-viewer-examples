@@ -12,6 +12,7 @@ import {
   PrintService,
   AnnotationService,
   FormFieldsService,
+  FormDesignerService
 } from '@syncfusion/ej2-angular-pdfviewer';
 
 /**
@@ -33,13 +34,15 @@ import {
     PrintService,
     AnnotationService,
     FormFieldsService,
+    FormDesignerService
   ],
 })
 export class AppComponent {
-  public service: string =
-    'https://localhost:5001/pdfviewer';
+  // To utilize the server-backed PDF Viewer, need to specify the service URL. This can be done by including the **[serviceUrl]='service'** attribute within the <ejs-pdfviewer></ejs-pdfviewer> component in app.component.html file.
+ // public service: string = 'https://localhost:5001/pdfviewer';
+
   //Sets the document path of the PDF Viewer.  
-  public document: string = 'PDF_Succinctly_Comments.pdf';
+  public document: string = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
   ngOnInit(): void {
   }
   //Method to check the comments added in the PDF document.

@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   // Replace the `localhost:44396 with the actual URL of your server
   public service = 'https://localhost:44396/pdfviewer';
   // Replace correct PDF Document URL want to load
-  document="https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf"
+  document="https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf"
 
   ngOnInit(): void {
   }
