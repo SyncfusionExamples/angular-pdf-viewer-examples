@@ -39,7 +39,7 @@ import {
     PrintService]
 })
 export class AppComponent implements OnInit {
-  public service = 'https://ej2services.syncfusion.com/production/web-services/api/pdfviewer';
+  public service = 'https://services.syncfusion.com/angular/production/api/pdfviewer';
   public document = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
   ngOnInit(): void {
   }

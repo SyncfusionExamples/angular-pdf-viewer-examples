@@ -39,9 +39,7 @@ import {
 })
 export class AppComponent {
 
-  // To utilize the server-backed PDF Viewer, need to specify the service URL. This can be done by including the **[serviceUrl]='service'** attribute within the <ejs-pdfviewer></ejs-pdfviewer> component in app.component.html file.
-  // public service: string = 'https://localhost:44399/pdfviewer';
-
+  public service: string = 'https://localhost:44399/pdfviewer';
   public document: string = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
   ngOnInit(): void {
   }
