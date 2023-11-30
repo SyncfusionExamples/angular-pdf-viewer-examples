@@ -2,15 +2,16 @@
 import { Component, OnInit } from '@angular/core';
 import {
   PdfViewerComponent,
-  LinkAnnotationService, 
+  LinkAnnotationService,
   BookmarkViewService,
-  MagnificationService, 
+  MagnificationService,
   ThumbnailViewService,
-  ToolbarService, 
-  NavigationService, 
-  TextSearchService, 
-  TextSelectionService, 
+  ToolbarService,
+  NavigationService,
+  TextSearchService,
+  TextSelectionService,
   PrintService,
+  AnnotationService,
   FormFieldsService,
   FormDesignerService
 } from '@syncfusion/ej2-angular-pdfviewer';
@@ -19,9 +20,10 @@ import {
   selector: 'app-root',
   // specifies the template string for the PDF Viewer component
   template: `<div class="content-wrapper">
+  <button (click)="AddFreeText()">AddFreeText</button>
+  <button (click)="RemoveFreeText()">RemoveFreeTextSelection</button>
   <ejs-pdfviewer 
     id="pdfViewer" 
-    (exportSuccess)="fireExportRequestSuccess()"
     [documentPath]='document' 
     [resourceUrl]='resource' 
     style="height:640px;
@@ -40,7 +42,8 @@ import {
     TextSelectionService, 
     PrintService,
     FormFieldsService,
-    FormDesignerService
+    FormDesignerService,
+    AnnotationService
   ]
 })
 export class AppComponent implements OnInit {
@@ -49,13 +52,26 @@ export class AppComponent implements OnInit {
   public resource: string = 'https://cdn.syncfusion.com/ej2/23.1.43/dist/ej2-pdfviewer-lib';
   ngOnInit(): void {
   }
-  //Method to notify popup once form is submitted.
-  public fireExportRequestSuccess() {
-    var pdfViewer = (<any>document.getElementById('pdfViewer'))
+   //Method to add free text annotation programmatically.
+   AddFreeText() {
+    var pdfviewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
+    pdfviewer.freeTextSettings.width = 200;
+    pdfviewer.freeTextSettings.height = 50;
+    pdfviewer.freeTextSettings.textAlignment = 'Center';
+    pdfviewer.freeTextSettings.borderStyle = 'solid';
+    pdfviewer.freeTextSettings.borderWidth = 2;
+    pdfviewer.freeTextSettings.borderColor = 'blue';
+    pdfviewer.freeTextSettings.fillColor = 'blue';
+    pdfviewer.freeTextSettings.fontSize = 14;
+    pdfviewer.freeTextSettings.fontColor = 'black';
+    pdfviewer.freeTextSettings.defaultText = 'Syncfusion';
+    pdfviewer.freeTextSettings.isReadonly = true;
+    pdfviewer.annotationModule.setAnnotationMode('FreeText');
+  }
+  //Method to remove the selection from free text annotation.
+  RemoveFreeText() {
+    var pdfviewer = (<any>document.getElementById('pdfViewer'))
       .ej2_instances[0];
-    pdfViewer.viewerBase.openImportExportNotificationPopup(
-      'Your form information has been saved. You can resume it at any times.Form Information Saved'
-    );
+    pdfviewer.annotationModule.setAnnotationMode('Circle');
   }
 }
-
