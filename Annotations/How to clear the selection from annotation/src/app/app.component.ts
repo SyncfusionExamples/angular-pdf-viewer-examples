@@ -48,7 +48,7 @@ import {
 })
 export class AppComponent implements OnInit {
 
-  public document = "https://cdn.syncfusion.com/content/pdf/form-filling-document.pdf";
+  public document = "https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf";
   public resource: string = 'https://cdn.syncfusion.com/ej2/23.1.43/dist/ej2-pdfviewer-lib';
   ngOnInit(): void {
   }
