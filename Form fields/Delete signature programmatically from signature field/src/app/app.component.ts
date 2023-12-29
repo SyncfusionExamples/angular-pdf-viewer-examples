@@ -24,7 +24,7 @@ import { LinkAnnotationService, BookmarkViewService, MagnificationService,
 export class AppComponent implements OnInit {
  
   // To utilize the server-backed PDF Viewer, need to specify the service URL. This can be done by including the **[serviceUrl]='service'** attribute within the <ejs-pdfviewer></ejs-pdfviewer> component in app.component.html file.
-  public service: string = 'https://services.syncfusion.com/angular/production/api/pdfviewer';
+  //public service: string = 'https://services.syncfusion.com/angular/production/api/pdfviewer';
 
   //Document path to load the PDF document
   public document: string = 'https://cdn.syncfusion.com/content/pdf/form-filling-document.pdf';
