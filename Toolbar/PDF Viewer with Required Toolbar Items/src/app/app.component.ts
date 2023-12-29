@@ -26,7 +26,7 @@ import {
 })
 export class AppComponent implements OnInit {
 // To utilize the server-backed PDF Viewer, need to specify the service URL. Within the template, configure the PDF Viewer by adding the **[serviceUrl]='service'** attribute inside the div element.
-//public service = 'https://ej2services.syncfusion.com/production/web-services/api/pdfviewer';
+//public service = 'https://services.syncfusion.com/angular/production/api/pdfviewer';
 
 public document = 'https://cdn.syncfusion.com/content/pdf/form-filling-document.pdf';
 public toolbarSettings = {
