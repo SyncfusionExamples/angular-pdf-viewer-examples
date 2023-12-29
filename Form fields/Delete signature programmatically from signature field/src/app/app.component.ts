@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
 
   //Document path to load the PDF document
   public document: string = 'https://cdn.syncfusion.com/content/pdf/form-filling-document.pdf';
-  public resource: string = 'https://cdn.syncfusion.com/ej2/23.1.43/dist/ej2-pdfviewer-lib';
+  public resource: string = 'https://cdn.syncfusion.com/ej2/24.1.41/dist/ej2-pdfviewer-lib';
   ngOnInit(): void {
   }
   //Method to remove signature from signature field

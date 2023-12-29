@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
 //public service = 'https://services.syncfusion.com/angular/production/api/pdfviewer';
 
 public document = 'https://cdn.syncfusion.com/content/pdf/form-filling-document.pdf';
-public resource: string = 'https://cdn.syncfusion.com/ej2/23.1.43/dist/ej2-pdfviewer-lib';
+public resource: string = 'https://cdn.syncfusion.com/ej2/24.1.41/dist/ej2-pdfviewer-lib';
 public toolbarSettings = {
   showTooltip: true,
   toolbarItems: [
