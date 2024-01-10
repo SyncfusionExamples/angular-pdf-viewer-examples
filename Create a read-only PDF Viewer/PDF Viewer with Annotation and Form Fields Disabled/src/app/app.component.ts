@@ -19,7 +19,15 @@ import {
   selector: 'app-root',
   // specifies the template string for the PDF Viewer component
   template: `<div class="content-wrapper">
-  <ejs-pdfviewer id="pdfViewer" [enableAnnotation]='false' [enableFormFields]='false' [documentPath]='document' style="height:640px;display:block"></ejs-pdfviewer>
+  <ejs-pdfviewer 
+    id="pdfViewer" 
+    [enableAnnotation]='false' 
+    [enableFormDesigner]='false' 
+    [documentPath]='document' 
+    [resourceUrl]='resource' 
+    style="height:640px;
+    display:block">
+  </ejs-pdfviewer>
 </div>`,
   providers: [
     PdfViewerComponent,
@@ -38,11 +46,10 @@ import {
 })
 export class AppComponent implements OnInit {
 
-// To utilize the server-backed PDF Viewer, need to specify the service URL. Within the template, configure the PDF Viewer by adding the **[serviceUrl]='service'** attribute inside the div element.
-//public service = 'https://ej2services.syncfusion.com/production/web-services/api/pdfviewer';
-
-public document = "https://cdn.syncfusion.com/content/pdf/form-filling-document.pdf";
-
+  public document = "https://cdn.syncfusion.com/content/pdf/form-filling-document.pdf";
+  public resource: string = 'https://cdn.syncfusion.com/ej2/24.1.41/dist/ej2-pdfviewer-lib';
+  // To utilize the server-backed PDF Viewer, need to specify the service URL. This can be done by including the **[serviceUrl]='service'** attribute within the <ejs-pdfviewer></ejs-pdfviewer> component in app.component.html file.
+  //public service: string = 'https://services.syncfusion.com/angular/production/api/pdfviewer';
   ngOnInit(): void {
   }
 }

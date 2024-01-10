@@ -21,7 +21,7 @@ import { LinkAnnotationService, BookmarkViewService, MagnificationService,
                 TextSelectionService, PrintService, FormDesignerService, FormFieldsService]
   })
 export class AppComponent implements OnInit {
-  // Replace the `localhost:44396 with the actual URL of your server
+
   // Replace the "localhost:44396" with the actual URL of your server
   public service = 'https://localhost:44396/pdfviewer';
   // Replace correct PDF Document URL want to load

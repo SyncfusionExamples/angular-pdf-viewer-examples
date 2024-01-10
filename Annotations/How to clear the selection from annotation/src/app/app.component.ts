@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+
+import { Component, OnInit } from '@angular/core';
 import {
   PdfViewerComponent,
   LinkAnnotationService,
@@ -15,40 +16,46 @@ import {
   FormDesignerService
 } from '@syncfusion/ej2-angular-pdfviewer';
 
-/**
- * Default PdfViewer Controller
- */
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html',
-  encapsulation: ViewEncapsulation.None,
+  // specifies the template string for the PDF Viewer component
+  template: `<div class="content-wrapper">
+  <button (click)="AddFreeText()">AddFreeText</button>
+  <button (click)="RemoveFreeText()">RemoveFreeTextSelection</button>
+  <ejs-pdfviewer 
+    id="pdfViewer" 
+    [documentPath]='document' 
+    [resourceUrl]='resource' 
+    style="height:640px;
+    display:block">
+  </ejs-pdfviewer>
+</div>`,
   providers: [
-    LinkAnnotationService,
+    PdfViewerComponent,
+    LinkAnnotationService, 
     BookmarkViewService,
     MagnificationService,
-    ThumbnailViewService,
-    ToolbarService,
-    NavigationService,
-    TextSearchService,
-    TextSelectionService,
+    ThumbnailViewService, 
+    ToolbarService, 
+    NavigationService, 
+    TextSearchService, 
+    TextSelectionService, 
     PrintService,
-    AnnotationService,
     FormFieldsService,
-    FormDesignerService
-  ],
+    FormDesignerService,
+    AnnotationService
+  ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
+  public document = "https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf";
+  public resource: string = 'https://cdn.syncfusion.com/ej2/24.1.41/dist/ej2-pdfviewer-lib';
   // To utilize the server-backed PDF Viewer, need to specify the service URL. This can be done by including the **[serviceUrl]='service'** attribute within the <ejs-pdfviewer></ejs-pdfviewer> component in app.component.html file.
-  //public service: string ='https://ej2services.syncfusion.com/production/web-services/api/pdfviewer';
-
-  public document: string = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
-
+  //public service: string = 'https://services.syncfusion.com/angular/production/api/pdfviewer';
   ngOnInit(): void {
   }
-
-  //Method to add free text annotation programmatically.
-  AddFreeText() {
+   //Method to add free text annotation programmatically.
+   AddFreeText() {
     var pdfviewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
     pdfviewer.freeTextSettings.width = 200;
     pdfviewer.freeTextSettings.height = 50;
@@ -59,7 +66,7 @@ export class AppComponent {
     pdfviewer.freeTextSettings.fillColor = 'blue';
     pdfviewer.freeTextSettings.fontSize = 14;
     pdfviewer.freeTextSettings.fontColor = 'black';
-    pdfviewer.freeTextSettings.defaultText = 'Dinuka';
+    pdfviewer.freeTextSettings.defaultText = 'Syncfusion';
     pdfviewer.freeTextSettings.isReadonly = true;
     pdfviewer.annotationModule.setAnnotationMode('FreeText');
   }
