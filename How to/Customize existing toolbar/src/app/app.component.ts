@@ -5,6 +5,8 @@ import {
   AnnotationService, TextSearchService, TextSelectionService,
   PrintService, FormDesignerService, FormFieldsService, CustomToolbarItemModel
 } from '@syncfusion/ej2-angular-pdfviewer';
+import { ComboBox } from "@syncfusion/ej2-dropdowns";
+import { TextBox } from "@syncfusion/ej2-inputs";
 
 @Component({
   selector: 'app-root',
@@ -25,20 +27,40 @@ import {
 export class AppComponent implements OnInit {
   public document = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
   public resource = 'https://cdn.syncfusion.com/ej2/24.1.41/dist/ej2-pdfviewer-lib';
-
-  public toolItem: CustomToolbarItemModel = {
+ 
+  public toolItem1: CustomToolbarItemModel = {
       prefixIcon: 'e-icons e-paste',
       id: 'print',
       tooltipText: 'Custom toolbar item',
-      align: 'left'
   };
-
+  public toolItem2: CustomToolbarItemModel = {
+      id: 'download',
+      text: 'Save',
+      tooltipText: 'Custom toolbar item',
+      align: 'right'
+  };
+  LanguageList: string[] = ['Typescript', 'Javascript', 'Angular', 'C#', 'C', 'Python'];
+  public toolItem3: CustomToolbarItemModel = {
+      type: 'Input',
+      tooltipText: 'Language List',
+      cssClass: 'percentage',
+      align: 'Left',
+      id: 'dropdown',
+      template: new ComboBox({ width: 100, value: 'TypeScript', dataSource: this.LanguageList, popupWidth: 85, showClearButton: false, readonly: false })  
+  };
+  public toolItem4: CustomToolbarItemModel = {
+      type: 'Input',
+      tooltipText: 'Text',
+      align: 'Right',
+      cssClass: 'find',
+      id: 'textbox',
+      template: new TextBox({ width: 125, placeholder: 'Type Here', created: this.OnCreateSearch})
+  }
   public toolbarSettings = {
     showTooltip: true,
-    toolbarItems: [this.toolItem,'OpenOption', 'PageNavigationTool', 'MagnificationTool', 'PanTool', 'SelectionTool',
-      'SearchOption', 'PrintOption', 'DownloadOption', 'UndoRedoTool', 'AnnotationEditTool',
-      'FormDesignerEditTool', 'CommentTool', 'SubmitForm', this.toolItem]
+    toolbarItems: [this.toolItem1, this.toolItem2, 'OpenOption', 'PageNavigationTool', 'MagnificationTool', this.toolItem3, 'PanTool', 'SelectionTool', 'SearchOption', 'PrintOption', 'DownloadOption', 'UndoRedoTool', 'AnnotationEditTool', 'FormDesignerEditTool', this.toolItem4, 'CommentTool', 'SubmitForm']
   };
+ 
   public toolbarClick(args: any): void {
       var pdfViewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
       if (args.item && args.item.id === 'print') {
@@ -47,8 +69,9 @@ export class AppComponent implements OnInit {
             pdfViewer.download();
       }
     }
+  public OnCreateSearch(this: any): any {
+      this.addIcon('prepend', 'e-icons e-search');
+  }
   ngOnInit(): void {
   }
-
-
-  }
+}
