@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation , ViewChild} from '@angular/core';
 import {
-  PdfViewerComponent,
   LinkAnnotationService,
   BookmarkViewService,
   MagnificationService,
@@ -12,32 +11,17 @@ import {
   TextSelectionService,
   FormFieldsService,
   FormDesignerService,
-  PrintService
+  PrintService,
+  PageOrganizerService
 } from '@syncfusion/ej2-angular-pdfviewer';
-import { CheckBoxComponent} from '@syncfusion/ej2-angular-buttons';
 import { MenuItemModel } from '@syncfusion/ej2-angular-navigations';
+import { CheckBoxComponent } from '@syncfusion/ej2-angular-buttons';
 
 @Component({
   selector: 'app-root',
-  // specifies the template string for the PDF Viewer component
-  template: `<div class="content-wrapper">
-  <tr>
-    <td class="left-side-pdfviewer">Hide Default Context Menu</td>
-      <td><ejs-checkbox id="hide" #hide [checked]="false" (change)="contextmenuHelper($event)"></ejs-checkbox></td>
-    </tr>
-  <tr>
-    <td class="left-side-pdfviewer">Add Custom option at bottom</td>
-    <td><ejs-checkbox id="toolbar" #toolbar [checked]="false" (change)="contextmenuHelper($event)"></ejs-checkbox></td>
-  </tr>
-  <ejs-pdfviewer id="pdfViewer"
-             [documentPath]='document'
-                 [resourceUrl]='resource' 
-                 (documentLoad)='documentLoaded($event)' 
-                 (customContextMenuBeforeOpen)='customContextMenuBeforeOpen($event)' 
-                 (customContextMenuSelect)='customContextMenuSelect($event)' 
-             style="height:640px;display:block">
-  </ejs-pdfviewer>
-</div>`,
+  templateUrl: 'app.component.html',
+  encapsulation: ViewEncapsulation.None,
+
   providers: [
     LinkAnnotationService,
     BookmarkViewService,
@@ -45,29 +29,35 @@ import { MenuItemModel } from '@syncfusion/ej2-angular-navigations';
     ThumbnailViewService,
     ToolbarService,
     NavigationService,
-    AnnotationService,
     TextSearchService,
     TextSelectionService,
+    PrintService,
+    AnnotationService,
     FormFieldsService,
     FormDesignerService,
-    PrintService]
+    PageOrganizerService
+  ],
 })
+
+
 export class AppComponent implements OnInit {
-  @ViewChild('pdfviewer')
-  public pdfviewerControl: PdfViewerComponent;
   @ViewChild('hide')
-  public hideObj: CheckBoxComponent;
+  public hideObj ?: CheckBoxComponent;
   @ViewChild('toolbar')
-  public toolbarObj: CheckBoxComponent;
+  public toolbarObj ?: CheckBoxComponent;
+
+  public hide: any;
+  public toolbar: any;
   public document = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
   public resource: string = 'https://cdn.syncfusion.com/ej2/24.1.41/dist/ej2-pdfviewer-lib';
+;
   ngOnInit(): void {
   }
   public menuItems: MenuItemModel[] = [
     {
         text: 'Search In Google',
         id: 'search_in_google',
-        iconCss: 'e-icons e-de-ctnr-find'
+        iconCss: 'e-icons e-search'
     },
     {
         text: 'Lock Annotation',
@@ -91,15 +81,17 @@ export class AppComponent implements OnInit {
     },
 ]
 public documentLoaded(e: any): void {
-    this.pdfviewerControl.addCustomMenu(this.menuItems, false, false);
+  var pdfViewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
+  pdfViewer.addCustomMenu(this.menuItems, false, false);
 }
 
 public customContextMenuSelect = (e: any): void => {
+  var pdfViewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
     switch (e.id) {
         case 'search_in_google':
-            for (var i = 0; i < this.pdfviewerControl.textSelectionModule.selectionRangeArray.length; i++) {
-                var content = this.pdfviewerControl.textSelectionModule.selectionRangeArray[i].textContent;
-                if ((this.pdfviewerControl.textSelectionModule.isTextSelection) && (/\S/.test(content))) {
+            for (var i = 0; i < pdfViewer.textSelectionModule.selectionRangeArray.length; i++) {
+                var content = pdfViewer.textSelectionModule.selectionRangeArray[i].textContent;
+                if ((pdfViewer.textSelectionModule.isTextSelection) && (/\S/.test(content))) {
                     window.open('http://google.com/search?q=' + content);
                 }
             }
@@ -124,33 +116,34 @@ public customContextMenuSelect = (e: any): void => {
 }
 
 public customContextMenuBeforeOpen = (e: any): void => {
+  var pdfViewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
     for (var i = 0; i < e.ids.length; i++) {
         var search = document.getElementById(e.ids[i]);
         if (search) {
             search.style.display = 'none';
-            if (e.ids[i] === 'search_in_google' && (this.pdfviewerControl.textSelectionModule) && this.pdfviewerControl.textSelectionModule.isTextSelection) {
+            if (e.ids[i] === 'search_in_google' && (pdfViewer.textSelectionModule) && pdfViewer.textSelectionModule.isTextSelection) {
                 search.style.display = 'block';
             } else if (e.ids[i] === "lock_annotation" || e.ids[i] === "unlock_annotation") {
                 var isLockOption = e.ids[i] === "lock_annotation";
-                for (var j = 0; j < this.pdfviewerControl.selectedItems.annotations.length; j++) {
-                    var selectedAnnotation: any = this.pdfviewerControl.selectedItems.annotations[j];
+                for (var j = 0; j < pdfViewer.selectedItems.annotations.length; j++) {
+                    var selectedAnnotation: any = pdfViewer.selectedItems.annotations[j];
                     if (selectedAnnotation && selectedAnnotation.annotationSettings) {
                         var shouldDisplay = (isLockOption && !selectedAnnotation.annotationSettings.isLock) ||
                             (!isLockOption && selectedAnnotation.annotationSettings.isLock);
                         search.style.display = shouldDisplay ? 'block' : 'none';
                     }
                 }
-            }  else if ((e.ids[i] === "read_only_true" || e.ids[i] === "read_only_false") && this.pdfviewerControl.selectedItems.formFields.length !== 0) {
+            }  else if ((e.ids[i] === "read_only_true" || e.ids[i] === "read_only_false") && pdfViewer.selectedItems.formFields.length !== 0) {
                 var isReadOnlyOption = e.ids[i] === "read_only_true";
-                for (var j = 0; j < this.pdfviewerControl.selectedItems.formFields.length; j++) {
-                    var selectedFormFields = this.pdfviewerControl.selectedItems.formFields[j];
+                for (var j = 0; j < pdfViewer.selectedItems.formFields.length; j++) {
+                    var selectedFormFields = pdfViewer.selectedItems.formFields[j];
                     if (selectedFormFields) {
-                        var selectedFormField = this.pdfviewerControl.selectedItems.formFields[j].isReadonly;
+                        var selectedFormField = pdfViewer.selectedItems.formFields[j].isReadonly;
                         var displayMenu = (isReadOnlyOption && !selectedFormField) || (!isReadOnlyOption && selectedFormField);
                         search.style.display = displayMenu ? 'block' : 'none';
                     }
                 }
-            } else if (e.ids[i] === 'formfield properties' && this.pdfviewerControl.selectedItems.formFields.length !== 0) {
+            } else if (e.ids[i] === 'formfield properties' && pdfViewer.selectedItems.formFields.length !== 0) {
                 search.style.display = 'block';
             }
         }
@@ -158,35 +151,36 @@ public customContextMenuBeforeOpen = (e: any): void => {
 }
 
 public lockAnnotations(e: any) {
-    var selectedAnnotations: any = this.pdfviewerControl.selectedItems.annotations;
-    for (var i = 0; i < selectedAnnotations.length; i++) {
-        var annotation = selectedAnnotations[i];
-        if (annotation && annotation.annotationSettings) {
-            annotation.annotationSettings.isLock = true;
-            this.pdfviewerControl.annotationModule.editAnnotation(annotation);
-            e.cancel = false;
+  var pdfViewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
+    for (var i = 0; i < pdfViewer.annotationCollection.length; i++) {
+        if (pdfViewer.annotationCollection[i].uniqueKey === pdfViewer.selectedItems.annotations[0].id) {
+            pdfViewer.annotationCollection[i].annotationSettings.isLock = true;
+            pdfViewer.annotationCollection[i].isCommentLock = true;
+            pdfViewer.annotation.editAnnotation(pdfViewer.annotationCollection[i]);
         }
+        e.cancel = false;
     }
 }
 
 public unlockAnnotations(e: any) {
-    var selectedAnnotations: any = this.pdfviewerControl.selectedItems.annotations;
-    for (var i = 0; i < selectedAnnotations.length; i++) {
-        var annotation = selectedAnnotations[i];
-        if (annotation && annotation.annotationSettings) {
-            annotation.annotationSettings.isLock = false;
-            this.pdfviewerControl.annotationModule.editAnnotation(annotation);
-            e.cancel = false;
+  var pdfViewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
+    for (var i = 0; i < pdfViewer.annotationCollection.length; i++) {
+        if (pdfViewer.annotationCollection[i].uniqueKey === pdfViewer.selectedItems.annotations[0].id) {
+            pdfViewer.annotationCollection[i].annotationSettings.isLock = false;
+            pdfViewer.annotationCollection[i].isCommentLock = false;
+            pdfViewer.annotation.editAnnotation(pdfViewer.annotationCollection[i]);
         }
+        e.cancel = false;
     }
 }
 
 public setReadOnlyTrue(e: any) {
-    var selectedFormFields = this.pdfviewerControl.selectedItems.formFields;
+  var pdfViewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
+    var selectedFormFields = pdfViewer.selectedItems.formFields;
     for (var i = 0; i < selectedFormFields.length; i++) {
         var selectedFormField = selectedFormFields[i];
         if (selectedFormField) {
-            this.pdfviewerControl.formDesignerModule.updateFormField(selectedFormField, {
+            pdfViewer.formDesignerModule.updateFormField(selectedFormField, {
                 isReadOnly: true,
             } as any);
         }
@@ -195,11 +189,12 @@ public setReadOnlyTrue(e: any) {
 }
 
 public setReadOnlyFalse(e: any) {
-    var selectedFormFields = this.pdfviewerControl.selectedItems.formFields;
+  var pdfViewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
+    var selectedFormFields = pdfViewer.selectedItems.formFields;
     for (var i = 0; i < selectedFormFields.length; i++) {
         var selectedFormField = selectedFormFields[i];
         if (selectedFormField) {
-            this.pdfviewerControl.formDesignerModule.updateFormField(selectedFormField, {
+            pdfViewer.formDesignerModule.updateFormField(selectedFormField, {
                 isReadOnly: false,
             } as any);
         }
@@ -208,6 +203,10 @@ public setReadOnlyFalse(e: any) {
 }
 
 public contextmenuHelper(e: any): void {
-    this.pdfviewerControl.addCustomMenu(this.menuItems, this.hideObj.checked, this.toolbarObj.checked);
+  var pdfViewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
+  this.hide = this.hideObj
+  this.toolbar = this.toolbarObj
+  pdfViewer.addCustomMenu(this.menuItems,this.hide.checked,this.toolbar.checked);
 }
+
 }

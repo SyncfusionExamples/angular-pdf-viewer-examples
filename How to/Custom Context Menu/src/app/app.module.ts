@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CheckBoxModule } from '@syncfusion/ej2-angular-buttons';
 import {
   PdfViewerModule,
   LinkAnnotationService,
@@ -20,7 +21,8 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    PdfViewerModule
+    PdfViewerModule,
+    CheckBoxModule
   ],
   providers: [LinkAnnotationService,
     BookmarkViewService,
