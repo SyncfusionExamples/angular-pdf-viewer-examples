@@ -14,19 +14,16 @@ import {
   PrintService,
   PageOrganizerService
 } from '@syncfusion/ej2-angular-pdfviewer';
+import  {Browser} from '@syncfusion/ej2-base';
 
 @Component({
   selector: 'app-root',
   // specifies the template string for the PDF Viewer component
   template: `<div class="content-wrapper">
-  <button (click)="openPageOrganizer()">Open PageOrganizer Pane</button>
   <ejs-pdfviewer id="pdfViewer"
              [documentPath]='document'
              [resourceUrl]='resource' 
              [documentLoad]="documentLoaded"
-             [enablePageOrganizer]=false
-             [isPageOrganizerOpen]=false
-             [pageOrganizerSettings]="pageOrganizerSettings"
              style="height:640px;display:block">
   </ejs-pdfviewer>
 </div>`,
@@ -47,24 +44,18 @@ import {
 })
 export class AppComponent implements OnInit {
   public document = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
-  public resource: string = 'https://cdn.syncfusion.com/ej2/24.1.41/dist/ej2-pdfviewer-lib';
-  public pageOrganizerSettings = { canDelete: true, canInsert: true, canRotate: true, canCopy: true, canRearrange: true };
+  public resource: string = 'https://cdn.syncfusion.com/ej2/24.1.41/dist/ej2-pdfviewer-lib';;
   ngOnInit(): void {
   }
 
   public documentLoaded(args: any): void {
-    var isInitialLoading = true;
     var viewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
-    if (isInitialLoading) {
-        viewer.isPageOrganizerOpen = true;
-        isInitialLoading = false;
-    } else {
-        viewer.isPageOrganizerOpen = false;
-    }
-  }
-  closePageOrganizer() {
-    var viewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
-    // Close Page Organizer panel.
-    viewer.pageOrganizer.closePageOrganizer();
+      if (Browser.isDevice && !viewer.enableDesktopMode) {
+        viewer.maxZoom = 200;
+          viewer.minZoom = 10;
+      }
+      else {
+        viewer.zoomMode = 'Default';
+      }
   }
 }
