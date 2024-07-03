@@ -22,6 +22,7 @@ import {
     AnnotationService, TextSearchService, TextSelectionService,
     PrintService, FormDesignerService, FormFieldsService]
 })
+
 export class AppComponent implements OnInit {
   public document = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
   public resource = 'https://cdn.syncfusion.com/ej2/24.1.41/dist/ej2-pdfviewer-lib';
@@ -35,7 +36,7 @@ export class AppComponent implements OnInit {
   };
   public toolbarSettings = {
     showTooltip: true,
-    toolbarItems: ['OpenOption',this.toolItem1, 'PageNavigationTool', 'MagnificationTool', 'PanTool', 'SelectionTool', 'SearchOption', 'PrintOption', 'DownloadOption', 'UndoRedoTool', 'AnnotationEditTool', 'FormDesignerEditTool', 'CommentTool', 'SubmitForm']
+    toolbarItems: ['OpenOption', this.toolItem1, 'PageNavigationTool', 'MagnificationTool', 'PanTool', 'SelectionTool', 'SearchOption', 'PrintOption', 'UndoRedoTool', 'AnnotationEditTool', 'FormDesignerEditTool', 'CommentTool', 'SubmitForm']
   };
   //To handle custom toolbar click event.
   public toolbarClick(args: any): void {
