@@ -18,8 +18,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.1" />
-    <PackageReference Include="Syncfusion.EJ2.PdfViewer.AspNet.Core.Windows" Version="20.2.0.49" />
-    <PackageReference Include="Syncfusion.PDF.OCR.Net.Core" Version="20.2.0.49" />
+    <PackageReference Include="Syncfusion.EJ2.PdfViewer.AspNet.Core" Version="*" />
+    <PackageReference Include="Syncfusion.PDF.OCR.Net.Core" Version="*" />
   </ItemGroup>
 
 
