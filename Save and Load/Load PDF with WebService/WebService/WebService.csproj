@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.8" />
-    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="19.4.0.53" />
-    <PackageReference Include="Syncfusion.EJ2.PdfViewer.AspNet.Core.Windows" Version="20.2.0.44" />
+    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="*" />
+    <PackageReference Include="Syncfusion.EJ2.PdfViewer.AspNet.Core" Version="*" />
   </ItemGroup>
 
 </Project>
