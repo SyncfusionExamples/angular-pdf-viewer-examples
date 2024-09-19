@@ -42,6 +42,7 @@ import {
 export class AppComponent implements OnInit {
   public document = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
   public resource: string = 'https://cdn.syncfusion.com/ej2/27.1.48/dist/ej2-pdfviewer-lib';
+  //By Changing PrintScaleFactor value we can adjust the Quality of the  PDF file.
   public printScaleFactor = 0.5;
   ngOnInit(): void {
   }
