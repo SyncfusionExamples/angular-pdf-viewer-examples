@@ -20,7 +20,7 @@ import {
   selector: 'app-root',
   // specifies the template string for the PDF Viewer component
   template: `<div class="content-wrapper">
-  <button onClick={addAnnotation}>Add Handwritten Signature programatically</button>
+  <button (click)="addAnnotation()">Add Handwritten Signature programatically</button>
   <ejs-pdfviewer id="pdfViewer"
              [documentPath]='document'
                  [resourceUrl]='resource' 
@@ -43,14 +43,8 @@ import {
 })
 export class AppComponent implements OnInit {
   public document = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
-  public resource: string = 'https://cdn.syncfusion.com/ej2/24.1.41/dist/ej2-pdfviewer-lib';;
+  public resource: string = 'https://cdn.syncfusion.com/ej2/27.1.48/dist/ej2-pdfviewer-lib';;
   ngOnInit(): void {
-  }
-
-  openBookmark() {
-    var viewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
-    // Open Bookmark pane.
-    viewer.bookmarkViewModule.openBookmarkPane();
   }
 
   addAnnotation() {
