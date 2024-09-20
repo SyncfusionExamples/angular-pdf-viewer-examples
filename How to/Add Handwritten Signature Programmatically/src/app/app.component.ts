@@ -20,7 +20,7 @@ import {
   selector: 'app-root',
   // specifies the template string for the PDF Viewer component
   template: `<div class="content-wrapper">
-  <button (click)="addAnnotation()">Add Handwritten signature programmatically</button>
+  <button  [ngStyle]="{'margin-top': '60px'}" (click)="addAnnotation()">Add Handwritten signature programmatically</button>
   <ejs-pdfviewer id="pdfViewer"
              [documentPath]='document'
                  [resourceUrl]='resource' 
