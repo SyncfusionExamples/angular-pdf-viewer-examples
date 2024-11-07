@@ -23,7 +23,6 @@ import {
         [documentPath]="document" 
         [serviceUrl]="serviceUrl" 
         style="height: 640px; display: block;"
-        (ajaxRequestSuccess)="handleAjaxRequestSuccess($event)"
         (exportSuccess)="handleExportSuccess($event)">
       </ejs-pdfviewer>
     </div>
@@ -46,24 +45,12 @@ import {
 export class AppComponent implements OnInit {
   public document: string = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
   public serviceUrl: string = 'https://services.syncfusion.com/js/production/api/pdfviewer';
-  public pageSizes: any[] = [];
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   findTextBounds() {
     const viewer = (document.getElementById('pdfViewer') as any).ej2_instances[0];
     console.log(viewer.textSearch.findText(['pdf', 'adobe'], false, 7));
-  }
-
-  // Event for AJAX request success
-  handleAjaxRequestSuccess(args: any) {
-    if (args.action === 'Load') {
-      const objLength = Object.keys(args.data.pageSizes).length;
-      for (let x = 0; x < objLength; x++) {
-        const pageSize = args.data.pageSizes[x];
-        this.pageSizes.push(pageSize);
-      }
-    }
   }
 
   // Event for export success
@@ -74,17 +61,17 @@ export class AppComponent implements OnInit {
       .then(objectData => {
         console.log(objectData);
         const shapeAnnotationData = objectData.pdfAnnotation[0].shapeAnnotation;
-        shapeAnnotationData.forEach((data:any) => {
+        shapeAnnotationData.forEach((data: any) => {
           if (data && data.rect && parseInt(data.rect.width)) {
-            const pageHeight = this.pageSizes[parseInt(data.page)].Height;
-
+            const viewer = (document.getElementById('pdfViewer') as any).ej2_instances[0];
+            const pageHeight = viewer.getPageInfo(parseInt(data.page)).height;
             // Converting PDF Library values into PDF Viewer values.
             const rect = {
               x: (parseInt(data.rect.x) * 96) / 72,
 
               // Converting pageHeight from pixels(PDF Viewer) to points(PDF Library) for accurate positioning
               // The conversion factor of 72/96 is used to change pixel values to points
-              y: (parseInt(pageHeight) * 72 / 96 - parseInt(data.rect.height)) * 96 / 72,
+              y: (parseInt(pageHeight) - parseInt(data.rect.height)) * 96 / 72,
               width: (parseInt(data.rect.width) - parseInt(data.rect.x)) * 96 / 72,
               height: (parseInt(data.rect.height) - parseInt(data.rect.y)) * 96 / 72,
             };
