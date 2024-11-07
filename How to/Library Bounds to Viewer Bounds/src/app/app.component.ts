@@ -68,9 +68,6 @@ export class AppComponent implements OnInit {
             // Converting PDF Library values into PDF Viewer values.
             const rect = {
               x: (parseInt(data.rect.x) * 96) / 72,
-
-              // Converting pageHeight from pixels(PDF Viewer) to points(PDF Library) for accurate positioning
-              // The conversion factor of 72/96 is used to change pixel values to points
               y: (parseInt(pageHeight) - parseInt(data.rect.height)) * 96 / 72,
               width: (parseInt(data.rect.width) - parseInt(data.rect.x)) * 96 / 72,
               height: (parseInt(data.rect.height) - parseInt(data.rect.y)) * 96 / 72,
