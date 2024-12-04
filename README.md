@@ -1,2 +1,2 @@
 # angular-pdf-viewer-examples
-This repository contains examples of Syncfusion PDF Viewer (Web) control.
+This repository contains examples of Syncfusion&reg; PDF Viewer (Web) control.
