@@ -63,15 +63,12 @@ export class AppComponent implements OnInit {
     // Fetch the PDF viewer instance
     const pdfviewer = (<any>document.getElementById("pdfViewer")).ej2_instances[0];
     
-    // Check the loaded document name
-    if (e.documentName === 'form-designer.pdf') {
       // Add a form field to the PDF
       pdfviewer.formDesignerModule.addFormField("Textbox", {
         name: "First Name",
         bounds: { X: 146, Y: 229, Width: 150, Height: 24 },
         tooltip: '<a href="loaded">Google</a>'
       } as TextFieldSettings);
-    }
   
     // Obtain the form field element
     const formField = document.getElementsByClassName("e-pv-formfield-input")[0];
