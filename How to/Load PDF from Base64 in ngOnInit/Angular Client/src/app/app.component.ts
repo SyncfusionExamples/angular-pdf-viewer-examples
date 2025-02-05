@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
 
   async fetchBase64FromURL(url: string) {
     const requestBody = {
-      data: 'https://cdn.syncfusion.com/content/pdf/form-filling-document.pdf'
+      data: url
     };
 
     this.http.post('https://localhost:7237/pdfviewer/LoadPdf', requestBody)
