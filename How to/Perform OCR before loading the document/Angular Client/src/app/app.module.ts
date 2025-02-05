@@ -12,6 +12,7 @@ import {
   TextSelectionService,
   PrintService
 } from '@syncfusion/ej2-angular-pdfviewer';
+import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -20,9 +21,11 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    PdfViewerModule
+    PdfViewerModule,
+    HttpClientModule  // Add HttpClientModule here
   ],
-  providers: [LinkAnnotationService,
+  providers: [
+    LinkAnnotationService,
     BookmarkViewService,
     MagnificationService,
     ThumbnailViewService,
@@ -30,7 +33,8 @@ import { AppComponent } from './app.component';
     NavigationService,
     TextSearchService,
     TextSelectionService,
-    PrintService],
+    PrintService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
