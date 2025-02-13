@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <UserSecretsId>0362a66d-0a9d-4b52-8e0a-6e09469f5c00</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Cloud.Storage.V1" Version="4.10.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.13" />
+    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="27.2.3" />
+	  <PackageReference Include="Azure.Storage.Blobs" Version="*" />
+	  <PackageReference Include="Syncfusion.EJ2.PdfViewer.AspNet.Core.Windows" Version="27.2.3" />
+	  <PackageReference Include="Syncfusion.Pdf.Imaging.Net.Core" Version="27.2.3" />
+  </ItemGroup>
+</Project>
