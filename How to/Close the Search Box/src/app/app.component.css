@@ -1,0 +1,175 @@
+/* custom code start*/
+#magnificationToolbar {
+  background: transparent;
+  height: auto;
+  min-height: 56px;
+  width: 200px;
+  border: none;
+  position: absolute;
+  z-index: 1001;
+  bottom: 58px;
+  right: 16px;
+  transform: rotate(90deg);
+}
+
+.e-pv-fit-page-icon::before {
+  content: '\e91b';
+  font-family: "e-icons";
+}
+
+#magnificationToolbar.e-toolbar .e-toolbar-items {
+  background: transparent;
+}
+
+#magnificationToolbar.e-toolbar .e-tbar-btn {
+  border-radius: 50%;
+  min-height: 30px;
+  min-width: 30px;
+  border: 1px solid #c8c8c8;
+}
+
+#topToolbar {
+  top: 0px;
+  z-index: 1001;
+}
+
+.e-tbar-section .e-sample-resize-container {
+  height: 46px;
+}
+
+.e-bookmark-popup {
+  height: 200px;
+  max-width: 250px;
+}
+
+.e-text-search-popup {
+  height: 104px;
+  max-width: 348px;
+}
+
+.e-custom-search-input {
+  width: 234px;
+}
+
+.e-text-search-popup .e-footer-content, .e-bookmark-popup .e-footer-content {
+  padding: 0;
+  height: 0;
+}
+
+.search-button, .search-button:disabled, .search-button:focus, .search-button:hover  {
+  background: transparent;
+  box-shadow: none;
+}
+
+#popup .e-dlg-content {
+  padding-left: 0;
+  padding-bottom: 0;
+}
+
+.e-pv-bookmarks {
+  min-width: 234px;
+}
+
+.e-pv-current-page-number {
+  width: 46px;
+  height: 28px;
+  text-align: center;
+}
+
+.material .e-pv-current-page-number {
+  border-width: 1px;
+}
+.e-pv-zoom-out-sample {    
+  transform: rotate(90deg);
+  padding-right: 2px;
+}
+.customtoolbar.e-toolbar {
+background-color: #3f51b5;
+width: 50px;
+}
+.customtoolbar.e-toolbar .e-toolbar-items{
+  background-color: #3f51b5;
+  height: 40px;  
+  display: flex;
+  flex-wrap: wrap;
+  
+}
+.e-pv-icon-search::before {
+  font-size: 12px;
+}
+.e-pv-search-input.e-input-group .e-input-search-group-icon.e-input-group-icon {
+  background: rgba(0,0,0,0);
+}
+
+/* custom code end*/
+
+/* style for slider button*/
+
+.flex-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.render-mode-info {
+  background: none;
+  border: none;
+  padding-left: 0px;
+}
+
+.render-mode-info .render-mode-info-icon {
+  height: 16px;
+  width: 16px;
+}
+
+.switchLabel {
+  font-family: "Segoe UI", "GeezaPro", "DejaVu Serif", sans-serif;        
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.24px;
+  text-align: right;
+  font-size: 14px;
+}
+
+.render-mode-info .render-mode-info-icon::before {
+  line-height: 0.5rem;
+}
+
+.buttonSwitch {
+  Width: 40px;
+  Height: 24px;
+}
+
+.pdfviewer-property-section{
+  padding: 20px 15px;
+}
+
+.pdfviewer-contextmenu-checkbox-label{
+  padding: 10px;
+}
+
+.pdfviewer-control-section {
+  border-right: 1px solid #D7D7D7;
+}
+
+.pdfviewer-property-container{
+  padding-bottom: 30px;
+}
+
+.header-pdfviewer {
+  font-weight: 600;
+  padding: 20px 2px;
+}
+
+.e-chevron-left::before {
+  content: "\e93c"; /* Use the actual content code from your font for the left arrow */
+  font-family: "e-icons";
+  font-size: 16px; /* Adjust size as needed */
+  color: inherit; /* Ensure color is set correctly */
+}
+
+.e-chevron-right::before {
+  content: "\e93d"; /* Use the actual content code from your font for the right arrow */
+  font-family: "e-icons";
+  font-size: 16px; /* Adjust size as needed */
+  color: inherit; /* Ensure color is set correctly */
+}

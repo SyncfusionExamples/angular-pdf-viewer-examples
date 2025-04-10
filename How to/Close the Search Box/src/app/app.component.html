@@ -1,0 +1,122 @@
+<style>
+  .control-section{
+      margin-top: 100px;
+  }
+</style>
+<div class="control-section">
+  <div class="flex-container">
+    <div class="e-message render-mode-info">
+    </div>
+  </div>
+  <div class="content-wrapper e-tbar-section">
+    <div class="e-sample-resize-container">
+      <ejs-toolbar id="topToolbar" #customToolbar>
+        <e-items>
+          <e-item
+            prefixIcon="e-icons e-search"
+            (click)="findText($event)"
+            tooltipText="Find Text"
+            id="find_text"
+            align="right"
+          ></e-item>
+        </e-items>
+      </ejs-toolbar>
+    </div>
+    <div>
+      <div id="textSearchToolbar" [style.display]="'none'">
+        <div
+          class="e-pv-search-bar"
+          id="container_search_box"
+          [style.top]="'97px'"
+          [style.right]="'0px'"
+        >
+          <div
+            class="e-pv-search-bar-elements"
+            id="container_search_box_elements"
+          >
+            <div
+              class="e-input-group e-pv-search-input"
+              id="container_search_input_container"
+            >
+              <input
+                class="e-input"
+                id="container_search_input"
+                type="text"
+                placeholder="Find in document"
+                (keypress)="searchInputKeypressed($event)"
+              />
+              <span
+                class="e-input-group-icon e-input-search-group-icon e-icons e-search"
+                id="container_search_box-icon"
+                style="top: 4px;"
+                (click)="initiateTextSearch()"
+              ></span>
+              <span
+                class="e-input-group-icon e-input-search-group-icon e-icons e-close"
+                id="container_close_search_box-icon"
+                [style.display]="'none'"
+                style="top: 4px;"
+                (click)="clearTextSearch()"
+              ></span>
+            </div>
+            <button
+              class="e-btn e-icon-btn e-pv-search-btn e-icons e-chevron-left"
+              id="container_prev_occurrence"
+              (click)="previousTextSearch()"
+              type="button"
+              [disabled]="true"
+              aria-label="Previous Search text"
+            ></button>
+            <button
+              class="e-btn e-icon-btn e-pv-search-btn e-icons e-chevron-right"
+              id="container_next_occurrence"
+              type="button"
+              (click)="nextTextSearch()"
+              [disabled]="true"
+              aria-label="Next Search text"
+            ></button>
+            <button
+              id="container_search_box-icon"
+              style="top: 4px;"
+              type="button"
+              (click)="findText($event)"
+            >
+              Close
+            </button>
+          </div>
+          <div
+            class="e-pv-match-case-container"
+            id="container_match_case_container"
+          >
+            <div class="e-checkbox-wrapper e-wrapper e-pv-match-case">
+              <label for="container_match_case">
+                <input
+                  id="container_match_case"
+                  type="checkbox"
+                  class="e-control e-checkbox e-lib"
+                  (click)="checkBoxChanged($event)"
+                />
+                <span class="e-ripple-container" data-ripple="true"></span>
+                <span id="checkboxSpan" class="e-icons e-frame"></span>
+                <span class="e-label">Match case</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ejs-pdfviewer
+        #pdfviewer
+        id="pdfViewer"
+        [documentPath]="document"
+        [resourceUrl]="resource"
+        [enableAnnotationToolbar]="false"
+        [enableCommentPanel]="false"
+        [enableToolbar]="false"
+        [enableNavigationToolbar]="false"
+        (documentLoad)="documentLoaded($event)"
+        style="height:640px; display: block"
+      >
+      </ejs-pdfviewer>
+    </div>
+  </div>
+</div>
