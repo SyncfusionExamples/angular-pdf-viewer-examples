@@ -1,119 +1,119 @@
 <style>
-  .control-section{
-      margin-top: 100px;
-  }
-  
-  </style>
-  <div class="control-section" id="e-pv-redact-sb-panel">
-      <div class="content-wrapper">
-          <div class="flex-container">
-          </div>
-          <!--Appbar-->
-          <div class="row" [style.display]="'none'" id="e-pv-redact-sb-appbar">
-              <div class="col-md-12">
-                  <ejs-appbar colorMode="Primary" (created)="onLoad($event)">
-                      <span class="regular">Redaction</span>
-                      <div class="e-appbar-spacer"></div>
-                      <button #defaultButtonDownload ejs-button cssClass="e-inherit"
-                          iconCss="e-icons e-download e-btn-icon e-icon-left" (click)="download($event)">Download</button>
-                  </ejs-appbar>
-              </div>
-          </div>
-  
-          <!--primary toolbar-->
-          <div class="e-sample-resize-container">
-              <!-- Render the Toolbar Component -->
-              <ejs-toolbar overflowMode='Popup' cssClass="template" id="e-pv-redact-sb-toolbar" #primaryToolbar>
-                  <e-items>
-                      <e-item prefixIcon="e-icon e-folder" tooltipText="Open" id="pdfviewer_open" text="Open"
-                          (click)="openDocumentClicked($event)"></e-item>
-                      <e-item type="Separator"></e-item>
-                      <e-item prefixIcon="e-icon e-text-annotation" tooltipText="Text" cssClass="e-pv-redact-sb-font-container"
-                          text="Text" (click)="addText($event)"></e-item>
-                      <e-item prefixIcon="e-icons e-image" tooltipText="Image" cssClass="e-pv-redact-sb-image-container"
-                          text="Image" id="targetButton" (click)="imageDialog()"></e-item>
-                      <e-item prefixIcon="e-icons e-opacity" tooltipText="Pattern" cssClass="e-pv-redact-sb-pattern-container"
-                          text="Pattern" (click)="addPattern($event)"></e-item>
-                      <e-item prefixIcon="e-icons black-out" tooltipText="Black out" cssClass="e-pv-redact-sb-black-out-container"
-                          text="Blackout" (click)="addBlackout($event)"></e-item>
-                      <e-item prefixIcon="e-icons white-out" tooltipText="White out" cssClass="e-pv-redact-sb-white-out-container"
-                          text="Whiteout" (click)="addWhiteout($event)"></e-item>
-                      <e-item type="Separator"></e-item>
-                      <e-item prefixIcon="e-icons e-redact" cssClass="e-pv-redact-sb-redaction-container" text="Redact" tooltipTex="Redaction"
-                          id="redacticon" (click)="redaction()" [disabled]="true"></e-item>
-                  </e-items>
-              </ejs-toolbar>
-          </div>
-          <!--secondary toolbar-->
-          <div id="e-pv-redact-sb-toolbar-secondary" class="e-pv-secondary-toolbar">
-              <ejs-toolbar #secondaryToolbar>
-                  <e-items>
-                      <e-item prefixIcon="e-icons e-chevron-left" cssClas="e-pv-redact-sb-previous-container" id="previousPage" tooltipText="Previous Page"
-                          (click)="previousClicked($event)" [disabled]="true"></e-item>
-  
-                      <e-item>
-                          <ng-template #template>
-                                  <div>
-                                      <span id="e-pv-redact-sb-currentPage" title="Current Page">1 &ensp;</span>
-                                      <span id="e-pv-redact-sb-totalPage" title="Total Page">/ 1</span>
-                                  </div>
-                          </ng-template>
-                      </e-item>
-  
-                      <e-item prefixIcon="e-icon e-chevron-right" cssClass="e-pv-redact-sb-next-container" id="nextPage" tooltipText="Next Page"
-                          (click)="nextClicked($event)" [disabled]="true"></e-item>
-  
-                      <e-item type="Separator"></e-item>
-  
-                      <e-item cssClass="percentage">
-                          <ng-template #template>
-                              <ejs-combobox id='comboelement' [dataSource]='data' value="100%" [showClearButton]='false'
-                                  (change)="zoomValueChange($event)" width="90px" tooltipText="Zoom">
-                              </ejs-combobox>
-                          </ng-template>
-                      </e-item>
-                  </e-items>
-              </ejs-toolbar>
-          </div>
-          <!--pdfviewer-->
-          <ejs-pdfviewer #pdfviewer id='pdfViewer' [documentPath]='document' [serviceUrl]='service'
-              (pageChange)='pageChanged($event)' (documentLoad)='documentLoaded($event)'
-              (annotationAdd)='annotationAdd($event)' (annotationRemove)='annotationRemove($event)' [enableAnnotationToolbar] ="false" [enableCommentPanel] = "false" [enableToolbar]=false
-              [enableNavigationToolbar]=false (created)='onLoad($event)' style="height:640px; display: block">
-          </ejs-pdfviewer>
-          <input type="file" id="fileUpload" accept=".pdf" style="display:block;visibility:hidden;width:0;height:0;">
-  
-          <!--dialog box-->
-          <div class="control-section template">
-              <ejs-dialog id="e-pv-redact-sb-dialog" #dialogComponent [showCloseIcon]='showCloseIcon' [target]='target'
-                  [width]='width' [visible]='visible' [isModal]='isModal'>
-                  <ng-template #footerTemplate>
-                      <button id="cancelButton" #cancelButton class="e-control e-btn e-primary" data-ripple="true"
-                          (click)="closeDialog($event)">Cancel</button>
-                  </ng-template>
-                  <ng-template #header>
-                      <div id="dlg-template" title="upload" class="e-icon-settings"> Upload Image </div>
-                  </ng-template>
-  
-                  <div class="drop-area-wrap" id="e-pv-redact-sb-drop-area-wrap" [style.display]="'none'">
-                      <div id='e-pv-redact-sb-defaultfileupload'>
-                          <div class="control_wrapper">
-                              <ejs-uploader #defaultupload id='defaultfileupload' [asyncSettings]='path' [dropArea]='dropElement'
-                                  (change)='onFileChange($event)' [allowedExtensions]='allowedExtensions' ></ejs-uploader>
-                              <span class="e-file-drop">Or drop files here</span>
-                              <div>(Only JPG and PNG images will be accepted)</div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="e-pv-redact-sb-image-list">
-                      <div id='imageContainer' class="e-pv-redact-sb-image-container">
-                          <img id='imageView' class="e-pv-redact-sb-image-source" style="display:none"/>
-                      </div>
-                  </div>
-  
-              </ejs-dialog>
-          </div>
-      </div>
-  </div>
-  
-  
+    .control-section{
+        margin-top: 100px;
+    }
+    
+    </style>
+    <div class="control-section" id="e-pv-redact-sb-panel">
+        <div class="content-wrapper">
+            <div class="flex-container">
+            </div>
+            <!--Appbar-->
+            <div class="row" [style.display]="'none'" id="e-pv-redact-sb-appbar">
+                <div class="col-md-12">
+                    <ejs-appbar colorMode="Primary" (created)="onLoad($event)">
+                        <span class="regular">Redaction</span>
+                        <div class="e-appbar-spacer"></div>
+                        <button #defaultButtonDownload ejs-button cssClass="e-inherit"
+                            iconCss="e-icons e-download e-btn-icon e-icon-left" (click)="download($event)">Download</button>
+                    </ejs-appbar>
+                </div>
+            </div>
+    
+            <!--primary toolbar-->
+            <div class="e-sample-resize-container">
+                <!-- Render the Toolbar Component -->
+                <ejs-toolbar overflowMode='Popup' cssClass="template" id="e-pv-redact-sb-toolbar" #primaryToolbar>
+                    <e-items>
+                        <e-item prefixIcon="e-icon e-folder" tooltipText="Open" id="pdfviewer_open" text="Open"
+                            (click)="openDocumentClicked($event)"></e-item>
+                        <e-item type="Separator"></e-item>
+                        <e-item prefixIcon="e-icon e-text-annotation" tooltipText="Text" cssClass="e-pv-redact-sb-font-container"
+                            text="Text" (click)="addText($event)"></e-item>
+                        <e-item prefixIcon="e-icons e-image" tooltipText="Image" cssClass="e-pv-redact-sb-image-container"
+                            text="Image" id="targetButton" (click)="imageDialog()"></e-item>
+                        <e-item prefixIcon="e-icons e-opacity" tooltipText="Pattern" cssClass="e-pv-redact-sb-pattern-container"
+                            text="Pattern" (click)="addPattern($event)"></e-item>
+                        <e-item prefixIcon="e-icons black-out" tooltipText="Black out" cssClass="e-pv-redact-sb-black-out-container"
+                            text="Blackout" (click)="addBlackout($event)"></e-item>
+                        <e-item prefixIcon="e-icons white-out" tooltipText="White out" cssClass="e-pv-redact-sb-white-out-container"
+                            text="Whiteout" (click)="addWhiteout($event)"></e-item>
+                        <e-item type="Separator"></e-item>
+                        <e-item prefixIcon="e-icons e-redact" cssClass="e-pv-redact-sb-redaction-container" text="Redact"
+                            id="redacticon" (click)="redaction()" [disabled]="true"></e-item>
+                    </e-items>
+                </ejs-toolbar>
+            </div>
+            <!--secondary toolbar-->
+            <div id="e-pv-redact-sb-toolbar-secondary" class="e-pv-secondary-toolbar">
+                <ejs-toolbar #secondaryToolbar>
+                    <e-items>
+                        <e-item prefixIcon="e-icons e-chevron-left" cssClas="e-pv-redact-sb-previous-container" id="previousPage"
+                            (click)="previousClicked($event)" [disabled]="true"></e-item>
+    
+                        <e-item>
+                            <ng-template #template>
+                                    <div>
+                                        <span id="e-pv-redact-sb-currentPage">1 &ensp;</span>
+                                        <span id="e-pv-redact-sb-totalPage">/ 1</span>
+                                    </div>
+                            </ng-template>
+                        </e-item>
+    
+                        <e-item prefixIcon="e-icon e-chevron-right" cssClass="e-pv-redact-sb-next-container" id="nextPage"
+                            (click)="nextClicked($event)" [disabled]="true"></e-item>
+    
+                        <e-item type="Separator"></e-item>
+    
+                        <e-item cssClass="percentage">
+                            <ng-template #template>
+                                <ejs-combobox id='comboelement' [dataSource]='data' value="100%" [showClearButton]='false'
+                                    (change)="zoomValueChange($event)" width="90px">
+                                </ejs-combobox>
+                            </ng-template>
+                        </e-item>
+                    </e-items>
+                </ejs-toolbar>
+            </div>
+            <!--pdfviewer-->
+            <ejs-pdfviewer #pdfviewer id='pdfViewer' [documentPath]='document' [resourceUrl]='resource'
+                (pageChange)='pageChanged($event)' (documentLoad)='documentLoaded($event)'
+                (annotationAdd)='annotationAdd($event)' (annotationRemove)='annotationRemove($event)' [enableAnnotationToolbar] ="false" [enableCommentPanel] = "false" [enableToolbar]=false
+                [enableNavigationToolbar]=false (created)='onLoad($event)' style="height:640px; display: block">
+            </ejs-pdfviewer>
+            <input type="file" id="fileUpload" accept=".pdf" style="display:block;visibility:hidden;width:0;height:0;">
+    
+            <!--dialog box-->
+            <div class="control-section template">
+                <ejs-dialog id="e-pv-redact-sb-dialog" #dialogComponent [height]='height' [showCloseIcon]='showCloseIcon' [target]='target'
+                    [width]='width' [visible]='visible' [isModal]='isModal'>
+                    <ng-template #footerTemplate>
+                        <button id="cancelButton" #cancelButton class="e-control e-btn e-primary" data-ripple="true"
+                            (click)="closeDialog($event)">Cancel</button>
+                    </ng-template>
+                    <ng-template #header>
+                        <div id="dlg-template" title="upload" class="e-icon-settings"> Upload Image </div>
+                    </ng-template>
+    
+                    <div class="drop-area-wrap" id="e-pv-redact-sb-drop-area-wrap" [style.display]="'none'">
+                        <div id='e-pv-redact-sb-defaultfileupload'>
+                            <div class="control_wrapper">
+                                <ejs-uploader #defaultupload id='defaultfileupload' [asyncSettings]='path' [dropArea]='dropElement'
+                                    (change)='onFileChange($event)' [allowedExtensions]='allowedExtensions' ></ejs-uploader>
+                                <span class="e-file-drop">Or drop files here</span>
+                                <div>(Only JPG and PNG images will be accepted)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="e-pv-redact-sb-image-list">
+                        <div id='imageContainer' class="e-pv-redact-sb-image-container">
+                            <img id='imageView' class="e-pv-redact-sb-image-source" style="display:none"/>
+                        </div>
+                    </div>
+    
+                </ejs-dialog>
+            </div>
+        </div>
+    </div>
+    
+    
