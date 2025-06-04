@@ -8,7 +8,7 @@
    <!-- Defines Content Security Policy to enhance security by specifying trusted sources for loading scripts, styles, fonts, images, and other resources. -->
    <meta http-equiv="Content-Security-Policy" content="
    default-src 'self';
-   script-src 'self' 'unsafe-eval' https://cdn.syncfusion.com/ 'unsafe-inline' blob:;
+   script-src 'self' 'wasm-unsafe-eval' https://cdn.syncfusion.com/ blob:;
    worker-src 'self' blob:;
    connect-src 'self' data: https://cdn.syncfusion.com;
    style-src 'self' https://fonts.googleapis.com/ 'unsafe-inline' blob:;
