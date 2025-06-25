@@ -59,20 +59,14 @@ export class AppComponent implements OnInit {
   ngOnInit(): void { }
 
   enableTextSelection(): void {
-    this.isTextSelectionEnabled = true;
     if (this.pdfViewerObj) {
       this.pdfViewerObj.enableTextSelection = true;
-      // Refresh viewer to apply the changes
-      this.pdfViewerObj.refresh();
     }
   }
 
   disableTextSelection(): void {
-    this.isTextSelectionEnabled = false;
     if (this.pdfViewerObj) {
       this.pdfViewerObj.enableTextSelection = false;
-      // Refresh viewer to apply the changes
-      this.pdfViewerObj.refresh();
     }
   }
 }
