@@ -51,7 +51,6 @@ import {
 export class AppComponent implements OnInit {
   public document: string = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
   public resourceUrl: string = 'https://cdn.syncfusion.com/ej2/28.1.33/dist/ej2-pdfviewer-lib';
-  public isTextSelectionEnabled: boolean = true;
   
   @ViewChild('pdfViewer')
   public pdfViewerObj!: PdfViewerComponent;
