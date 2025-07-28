@@ -1,0 +1,49 @@
+<div class="content-wrapper">
+  <!-- Login Form Container -->
+  <div class="login-container" *ngIf="!isAuthenticated">
+    <div class="login-form">
+      <h2>Login to Access PDF Viewer</h2>
+      
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" [(ngModel)]="userName" placeholder="Enter username" />
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" [(ngModel)]="password" placeholder="Enter password" />
+      </div>
+      
+      <div class="error-message" *ngIf="authError">{{ authError }}</div>
+      
+      <div class="button-container">
+        <button (click)="authenticate()">Login</button>
+      </div>
+      
+      <div class="credentials-info">
+        <p><strong>Demo Credentials:</strong></p>
+        <p>Username: UserA, Password: admin123</p>
+        <p>Username: UserB, Password: user123</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- PDF Viewer Control Area (When Authenticated) -->
+  <div class="viewer-controls" *ngIf="isAuthenticated">
+    <div class="user-info">
+      <span>Logged in as: <strong>{{ userName }}</strong></span>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+    <button class="open-pdf-btn" (click)="openPDFViewer()">Open PDF Viewer</button>
+  </div>
+  
+  <!-- PDF Dialog -->
+  <ejs-dialog #Dialog [visible]="false" [header]="header" [animationSettings]="animationSettings"
+    [showCloseIcon]="showCloseIcon" [target]="target" [width]="width" [height]="height" 
+    (open)="dialogOpen()" (close)="dialogClose()">
+    <ng-template #content>
+      <ejs-pdfviewer #pdfviewer id="pdfViewer" [documentPath]="document" [resourceUrl]="resourceUrl"
+        style="height:100%;display:block"></ejs-pdfviewer>
+    </ng-template>
+  </ejs-dialog>
+</div>
