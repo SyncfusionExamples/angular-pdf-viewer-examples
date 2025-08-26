@@ -1,0 +1,31 @@
+<style>
+  .control-section{
+      margin-top: 100px;
+  }
+</style>
+<div class="control-section">
+  <div class="content-wrapper">
+    <!-- Syncfusion PDF Viewer component -->
+    <!-- Displays the PDF document with full functionality -->
+    <ejs-pdfviewer
+      #pdfviewer
+      id="pdfViewer"
+      [documentPath]="document"
+      (downloadStart)="downloadStart($event)"
+      (downloadEnd)="downloadEnd($event)"
+      [resourceUrl]="resource"
+      style="height:640px;display:block"
+    ></ejs-pdfviewer>
+    <!-- Syncfusion Toast component -->
+    <!-- Displays notifications for download start and end -->
+    <ejs-toast
+      #defaulttoast
+      id="defaulttoast"
+      [position]="position"
+      (close)="onClose($event)"
+      cssClass="e-btn e-control e-success"
+      (beforeOpen)="onBeforeOpen()"
+    >
+    </ejs-toast>
+  </div>
+</div>
