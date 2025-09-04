@@ -1,0 +1,16 @@
+<style>
+  .control-section{
+      margin-top: 100px;
+  }
+</style>
+<div class="control-section">
+    <ejs-pdfviewer
+      #pdfviewer
+      id="pdfViewer"
+      [documentPath]="document"
+      [resourceUrl]="resource"
+      [toolbarSettings]="toolbarSettings"
+      (toolbarClick)="toolbarClick($event)"
+      style="height:640px;display:block"
+    ></ejs-pdfviewer>
+</div>
