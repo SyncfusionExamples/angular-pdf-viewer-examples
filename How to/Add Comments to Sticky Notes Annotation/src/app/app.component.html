@@ -1,0 +1,18 @@
+<style>
+  .control-section{
+      margin-top: 100px;
+  }
+</style>
+<div class="control-section">
+  <div class="content-wrapper">
+    <ejs-pdfviewer
+      #pdfviewer
+      id="pdfViewer"
+      [documentPath]="document"
+      [resourceUrl]="resource"
+      style="height:640px;display:block"
+      (documentLoad)="documentLoad()"
+      (annotationAdd)="annotationAdd()"
+    ></ejs-pdfviewer>
+  </div>
+</div>
