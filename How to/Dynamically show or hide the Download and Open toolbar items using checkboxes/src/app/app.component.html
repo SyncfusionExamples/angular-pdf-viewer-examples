@@ -1,0 +1,26 @@
+<style>
+  .control-section{
+      margin-top: 100px;
+  }
+</style>
+<div class="control-section">
+  <div class="content-wrapper">
+     <div class="checkbox-container">
+        <label>
+        <input type="checkbox" [(ngModel)]="downloadEnabled" (change)="onCheckbox1Change($event)">
+            Download
+        </label>
+        <label>
+        <input type="checkbox" [(ngModel)]="openEnabled" (change)="onCheckbox2Change($event)">
+            Open
+        </label>
+    <ejs-pdfviewer
+      #pdfviewer
+      id="pdfViewer"
+      [documentPath]="document"
+      [resourceUrl]="resource"
+      style="height:640px;display:block"
+      [toolbarSettings]='toolbarSettings'
+    ></ejs-pdfviewer>
+  </div>
+</div>
