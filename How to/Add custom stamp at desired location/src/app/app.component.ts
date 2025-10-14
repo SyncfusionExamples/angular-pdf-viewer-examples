@@ -27,19 +27,23 @@ import { FormsModule } from '@angular/forms';
 })
 
 export class AppComponent implements OnInit {
+  // Access the PDF Viewer instance using ViewChild
   @ViewChild('pdfviewer') public pdfviewerControl: PdfViewerComponent | undefined;
 
-  public document: string =
-    'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
-  public resource: string =
-    'https://cdn.syncfusion.com/ej2/23.2.6/dist/ej2-pdfviewer-lib';
+  // URL of the PDF document to be loaded
+  public document: string = 'https://cdn.syncfusion.com/content/pdf/pdf-succinctly.pdf';
 
-  ngOnInit(): void {
-    // Perform any initialization tasks here
-  }
+  // URL for the PDF Viewer library resources
+  public resource: string = 'https://cdn.syncfusion.com/ej2/23.2.6/dist/ej2-pdfviewer-lib';
 
+  ngOnInit(): void {}
+
+  // Method to configure and apply a custom stamp to the PDF
   customStamp() {
-    var viewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
+    // Access the PDF Viewer instance from the DOM
+    const viewer = (<any>document.getElementById('pdfViewer')).ej2_instances[0];
+
+    // Set custom stamp settings (not added to toolbar menu)
     viewer.customStampSettings = {
       width: 300,
       height: 150,
@@ -47,6 +51,8 @@ export class AppComponent implements OnInit {
       isAddToMenu: false,
       enableCustomStamp: false,
     };
+
+    // Define the custom stamp image (base64 format)
     viewer.customStamp = [
       {
         customStampName: 'Image',
@@ -56,3 +62,4 @@ export class AppComponent implements OnInit {
     ];
   }
 }
+
