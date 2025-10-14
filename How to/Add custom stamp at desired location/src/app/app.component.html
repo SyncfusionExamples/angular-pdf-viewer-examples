@@ -1,0 +1,17 @@
+<style>
+  .control-section{
+      margin-top: 100px;
+  }
+</style>
+<div class="control-section">
+  <div class="content-wrapper">
+    <button (click)="customStamp()">Custom Stamp</button>
+    <ejs-pdfviewer
+      #pdfviewer
+      id="pdfViewer"
+      [documentPath]="document"
+      [resourceUrl]="resource"
+      style="height:640px;display:block"
+    ></ejs-pdfviewer>
+  </div>
+</div>
