@@ -11,15 +11,19 @@
       [documentPath]="document"
       [resourceUrl]="resource"
       style="height:640px;display:block"
+       <!-- Annotation event bindings -->
       (annotationAdd)="triggerEvent($event)"
       (annotationResize)="triggerEvent($event)"
       (annotationMove)="triggerEvent($event)"
       (annotationPropertiesChange)="triggerEvent($event)"
       (annotationRemove)="triggerEvent($event)"
+      <!-- Comment event bindings -->
       (commentAdd)="triggerEvent($event)"
       (commentEdit)="triggerEvent($event)"
       (commentDelete)="triggerEvent($event)"
       (commentStatusChanged)="triggerEvent($event)"
+      
+      <!-- Form field event bindings -->
       (formFieldAdd)="triggerEvent($event)"
       (formFieldMove)="triggerEvent($event)"
       (formFieldResize)="triggerEvent($event)"
