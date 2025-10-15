@@ -1,3 +1,4 @@
+// Import Angular core modules and Syncfusion PDF Viewer services
 import { Component, ViewEncapsulation, OnInit,ViewChild} from '@angular/core';
 import { PdfViewerComponent, LinkAnnotationService, BookmarkViewService, MagnificationService, ThumbnailViewService, ToolbarService, NavigationService, TextSearchService, TextSelectionService, PrintService, AnnotationService, FormFieldsService, FormDesignerService, PageOrganizerService,PdfViewerModule, TextSelectionStartEventArgs, AnnotationSelectEventArgs } from '@syncfusion/ej2-angular-pdfviewer';
 import { SwitchComponent, SwitchModule } from '@syncfusion/ej2-angular-buttons';
@@ -34,6 +35,7 @@ export class AppComponent {
     ngOnInit(): void {
         // ngOnInit function
     }
+   // Event handler for all viewer-related 
     public triggerEvent(e: any): void {
     console.log('Changes are observed in PDF Viewer!');
   }
