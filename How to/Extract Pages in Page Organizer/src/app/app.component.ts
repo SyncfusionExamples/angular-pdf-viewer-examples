@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
      // Extract pages 1 and 2
     const array = (viewer as any).extractPages('1,2');
      // Load the extracted pages back into the viewer
-    (viewer as any).load(array);
+    (viewer as any).load(array,"");
     console.log(array);
   }
 }
