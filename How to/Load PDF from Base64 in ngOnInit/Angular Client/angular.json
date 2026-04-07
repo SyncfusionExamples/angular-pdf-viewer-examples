@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "loadingpdf:build:production"
+              "buildTarget": "loadingpdf:build:production"
             },
             "development": {
-              "browserTarget": "loadingpdf:build:development"
+              "buildTarget": "loadingpdf:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "loadingpdf:build"
+            "buildTarget": "loadingpdf:build"
           }
         },
         "test": {

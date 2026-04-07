@@ -12,6 +12,7 @@ import {
   PdfPage,
 } from '@syncfusion/ej2-pdf';
 @Component({
+  standalone: false,
   selector: 'app-root',
   // specifies the template string for the PDF Viewer component
   template: `<div class="content-wrapper" style="display: abosolute;width: 80%;height: 670px">

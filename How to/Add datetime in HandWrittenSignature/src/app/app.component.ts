@@ -24,6 +24,7 @@ import { SwitchComponent } from '@syncfusion/ej2-angular-buttons';
  * Default PdfViewer Controller
  */
 @Component({
+  standalone: false,
   selector: 'app-root',
   templateUrl: 'app.component.html',
   encapsulation: ViewEncapsulation.None,

@@ -4,6 +4,7 @@ import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { AnimationSettingsModel } from '@syncfusion/ej2-splitbuttons';
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.None,

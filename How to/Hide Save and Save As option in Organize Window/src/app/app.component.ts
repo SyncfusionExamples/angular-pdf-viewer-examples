@@ -16,6 +16,7 @@ import {
 } from '@syncfusion/ej2-angular-pdfviewer';
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   template: `
     <div class="content-wrapper">

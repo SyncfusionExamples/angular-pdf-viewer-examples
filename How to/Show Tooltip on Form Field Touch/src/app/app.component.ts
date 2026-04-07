@@ -21,6 +21,7 @@ import {
 import { Tooltip } from '@syncfusion/ej2-popups';
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   template: `
     <div class="content-wrapper">
