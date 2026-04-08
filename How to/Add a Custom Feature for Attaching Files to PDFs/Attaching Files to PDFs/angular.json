@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "attachpdf:build:production"
+              "buildTarget": "attachpdf:build:production"
             },
             "development": {
-              "browserTarget": "attachpdf:build:development"
+              "buildTarget": "attachpdf:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "attachpdf:build"
+            "buildTarget": "attachpdf:build"
           }
         },
         "test": {

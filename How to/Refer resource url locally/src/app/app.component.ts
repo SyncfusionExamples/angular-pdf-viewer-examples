@@ -6,6 +6,7 @@ import { LinkAnnotationService, BookmarkViewService, MagnificationService,
        } from '@syncfusion/ej2-angular-pdfviewer';
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   // specifies the template string for the PDF Viewer component
   template: `<div class="content-wrapper">

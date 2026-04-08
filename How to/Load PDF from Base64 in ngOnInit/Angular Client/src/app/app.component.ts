@@ -6,6 +6,7 @@ import { PdfViewerModule, LinkAnnotationService, BookmarkViewService,
          AnnotationService, PageOrganizerService } from '@syncfusion/ej2-angular-pdfviewer';
          import { HttpClient } from '@angular/common/http';
 @Component({
+  standalone: false,
   selector: 'app-root',
   template: `<div class="content-wrapper">
               <!-- Conditionally render the PDF Viewer or a Loading message -->

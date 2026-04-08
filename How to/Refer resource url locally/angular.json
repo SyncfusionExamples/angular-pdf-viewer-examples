@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angular-pdfviewer:build:production"
+              "buildTarget": "angular-pdfviewer:build:production"
             },
             "development": {
-              "browserTarget": "angular-pdfviewer:build:development"
+              "buildTarget": "angular-pdfviewer:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-pdfviewer:build"
+            "buildTarget": "angular-pdfviewer:build"
           }
         },
         "test": {
