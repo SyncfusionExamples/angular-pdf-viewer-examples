@@ -1,0 +1,185 @@
+// PDF Viewer Component Styles
+
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+ion-header {
+  ion-toolbar {
+    --background: #3880ff;
+    --color: white;
+
+    ion-buttons {
+      ion-button {
+        --color: white;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
+
+ion-content {
+  --background: #f5f5f5;
+  height: 100%;
+}
+
+// Document selector segment
+.document-selector {
+  background: #ffffff;
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: center;
+
+  ion-segment {
+    --background: transparent;
+
+    ion-segment-button {
+      --background: #f0f0f0;
+      --background-checked: #3880ff;
+      --color: #333;
+      --color-checked: white;
+      border-radius: 8px;
+      margin: 0 4px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      ion-label {
+        font-size: 13px;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// Loading container
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  gap: 16px;
+  background: #f5f5f5;
+
+  ion-spinner {
+    --color: #3880ff;
+    width: 50px;
+    height: 50px;
+  }
+
+  ion-text {
+    p {
+      color: #666;
+      font-size: 16px;
+      margin: 0;
+    }
+  }
+}
+
+// PDF Viewer container - CRITICAL FIX
+.pdf-container {
+  display: block;
+  height: calc(100vh - 120px);
+  width: 100%;
+  background: white;
+  position: relative;
+
+  ejs-pdfviewer {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  ::ng-deep {
+    .e-pdfviewer {
+      height: 100%;
+      width: 100%;
+      display: block;
+
+      .e-pdfviewer-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        background: white;
+      }
+
+      .e-toolbar {
+        background: #f8f8f8;
+        border-bottom: 1px solid #ddd;
+        height: auto;
+        padding: 8px 12px;
+      }
+
+      .e-pdfviewer-viewport {
+        flex: 1;
+        overflow: auto;
+      }
+
+      .e-pdfviewer-canvas {
+        background: white;
+      }
+    }
+  }
+}
+
+// No documents message
+.no-documents {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 120px);
+  background: #f5f5f5;
+  text-align: center;
+
+  ion-text {
+    color: #999;
+
+    p {
+      font-size: 16px;
+      margin: 0;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .pdf-container {
+    height: calc(100vh - 140px);
+  }
+
+  .document-selector {
+    padding: 8px;
+
+    ion-segment {
+      ion-segment-button {
+        margin: 0 2px;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+// Print styles
+@media print {
+  ion-header,
+  .document-selector {
+    display: none !important;
+  }
+
+  .pdf-container {
+    height: auto;
+    border: none;
+  }
+}
