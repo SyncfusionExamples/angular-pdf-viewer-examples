@@ -1,7 +1,0 @@
-{
-  "name": "deployment-doc",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
