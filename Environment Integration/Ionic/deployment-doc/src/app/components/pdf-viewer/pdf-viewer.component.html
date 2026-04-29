@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Documentation Viewer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Document selector segment -->
+<div class="document-selector" *ngIf="documents.length > 0">
+  <ion-segment
+    [value]="currentDocument?.id"
+    (ionChange)="onDocumentChange($event)"
+  >
+    <ion-segment-button
+      *ngFor="let doc of documents"
+      [value]="doc.id"
+    >
+      <ion-label>{{ doc.name }}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</div>
+
+<!-- Loading spinner -->
+<div *ngIf="isLoading" class="loading-container">
+  <ion-spinner name="crescent" color="primary"></ion-spinner>
+  <ion-text>
+    <p>Loading PDF...</p>
+  </ion-text>
+</div>
+
+<!-- PDF Viewer Container -->
+<div class="pdf-container" *ngIf="!isLoading && pdfUrl && currentDocument">
+  <ejs-pdfviewer
+    #pdfViewer
+    id="pdfViewer"
+    [documentPath]="pdfUrl"
+    [resourceUrl]="resourceUrlPath"
+    (documentLoad)="onDocumentLoad()"
+    (loadFailed)="onLoadFailed($event)"
+  ></ejs-pdfviewer>
+</div>
+
+<!-- No documents message -->
+<div *ngIf="documents.length === 0" class="no-documents">
+  <ion-text>
+    <p>No documents available</p>
+  </ion-text>
+</div>
+
+<!-- Error Alert -->
+<ion-alert
+  [isOpen]="showErrorAlert"
+  header="Error Loading PDF"
+  [message]="errorMessage"
+  [buttons]="alertButtons"
+  (didDismiss)="closeErrorAlert()"
+></ion-alert>
