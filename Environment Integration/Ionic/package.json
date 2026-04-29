@@ -1,5 +1,5 @@
 {
-  "name": "deployment-doc",
+  "name": "pdfviewer-ionic",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -27,9 +27,7 @@
     "@capacitor/keyboard": "8.0.3",
     "@capacitor/status-bar": "8.0.2",
     "@ionic/angular": "^8.0.0",
-    "@syncfusion/ej2-angular-pdfviewer": "^33.1.49",
-    "@syncfusion/ej2-base": "^33.1.45",
-    "@syncfusion/ej2-buttons": "^33.1.49",
+    "@syncfusion/ej2-angular-pdfviewer": "^33.2.4",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
