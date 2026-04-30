@@ -1,5 +1,5 @@
 {
-  "name": "ssr",
+  "name": "angular-ssr-pdfviewer",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:SSR": "node dist/SSR/server/server.mjs"
+    "serve:ssr:angular-ssr-pdfviewer": "node dist/angular-ssr-pdfviewer/server/server.mjs"
   },
   "private": true,
   "packageManager": "npm@10.8.2",
@@ -20,7 +20,7 @@
     "@angular/platform-server": "^21.2.0",
     "@angular/router": "^21.2.0",
     "@angular/ssr": "^21.2.7",
-    "@syncfusion/ej2-angular-pdfviewer": "^33.1.49",
+    "@syncfusion/ej2-angular-pdfviewer": "^33.2.4",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
