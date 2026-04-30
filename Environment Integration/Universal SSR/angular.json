@@ -3,11 +3,11 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "analytics": "ef776aef-e904-45ec-9b51-98323b33df63"
+    "analytics": false
   },
   "newProjectRoot": "projects",
   "projects": {
-    "SSR": {
+    "angular-ssr-pdfviewer": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -42,13 +42,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "5MB",
+                  "maximumWarning": "11MB",
                   "maximumError": "15MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "11MB",
+                  "maximumError": "15MB"
                 }
               ],
               "outputHashing": "all"
@@ -65,10 +65,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "SSR:build:production"
+              "buildTarget": "angular-ssr-pdfviewer:build:production"
             },
             "development": {
-              "buildTarget": "SSR:build:development"
+              "buildTarget": "angular-ssr-pdfviewer:build:development"
             }
           },
           "defaultConfiguration": "development"
