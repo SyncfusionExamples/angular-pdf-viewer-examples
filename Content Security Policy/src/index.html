@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MyApp</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- Defines Content Security Policy to enhance security by specifying trusted sources for loading scripts, styles, fonts, images, and other resources. -->
+   <meta http-equiv="Content-Security-Policy" content="
+   default-src 'self';
+   script-src 'self' 'wasm-unsafe-eval' https://cdn.syncfusion.com/ blob:;
+   worker-src 'self' blob:;
+   connect-src 'self' data: https://cdn.syncfusion.com;
+   style-src 'self' https://fonts.googleapis.com/ 'unsafe-inline' blob:;
+   font-src 'self' data: https://fonts.googleapis.com/ https://fonts.gstatic.com/;
+   img-src 'self' data: blob:;
+ ">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
