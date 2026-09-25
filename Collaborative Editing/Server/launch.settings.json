@@ -1,0 +1,50 @@
+{
+  "profiles": {
+    "CollaborationServer": {
+      "commandName": "Node",
+      "program": "${workspaceFolder}/server.js",
+      "args": [],
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": "8081"
+      },
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "restart": true,
+      "sourceMapPathOverrides": {
+        "webpack:///*": "${workspaceFolder}/*"
+      }
+    },
+    "CollaborationServer-Debug": {
+      "commandName": "Node",
+      "program": "${workspaceFolder}/server.js",
+      "args": [],
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": "8081",
+        "DEBUG": "pdf-collaborator:*"
+      },
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "restart": true,
+      "stopOnEntry": true,
+      "sourceMapPathOverrides": {
+        "webpack:///*": "${workspaceFolder}/*"
+      }
+    },
+    "CollaborationServer-Watch": {
+      "commandName": "Node",
+      "program": "${workspaceFolder}/node_modules/nodemon/bin/nodemon.js",
+      "args": [
+        "${workspaceFolder}/server.js"
+      ],
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": "8081"
+      },
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "restart": true
+    }
+  }
+}
