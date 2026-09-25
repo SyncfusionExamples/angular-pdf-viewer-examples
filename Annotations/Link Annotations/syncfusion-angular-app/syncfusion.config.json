@@ -1,0 +1,22 @@
+{
+  "framework": "angular",
+  "type": "ts",
+  "theme": "material3",
+  "styling": "css",
+  "template": "pdf-viewer",
+  "buildTool": null,
+  "components": [
+    "pdf-viewer"
+  ],
+  "mcp": {
+    "integrated": false,
+    "editors": []
+  },
+  "skills": {
+    "installed": false
+  },
+  "version": "1.0.1",
+  "createdAt": "2026-09-25T07:27:39.543Z",
+  "updatedAt": "2026-09-25T07:27:39.571Z",
+  "syncfusionVersion": "1.0.1"
+}

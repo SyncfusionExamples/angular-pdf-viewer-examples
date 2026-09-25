@@ -1,0 +1,12 @@
+<div class="pdf-viewer-container" style="margin: 50px 90px">
+  <button id="addInternalLink" (click)="addInternalLink()">Add Internal Link</button>
+  <button id="addExternalLink" (click)="addExternalLink()">Add External Link</button>
+  <ejs-pdfviewer
+    #pdfviewer
+    id="container"
+    [documentPath]="documentPath"
+    [resourceUrl]="resourceUrl"
+    hyperlinkOpenState="NewWindow"
+    style="height: 640px; display: block">
+  </ejs-pdfviewer>
+</div>
