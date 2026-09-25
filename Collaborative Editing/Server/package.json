@@ -1,0 +1,31 @@
+{
+  "name": "node-collaboration-sample",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "serve": "node server.js",
+    "dev": "nodemon server.js",
+    "debug": "node --inspect server.js",
+    "debug-brk": "node --inspect-brk server.js"
+  },
+  "keywords": [
+    "pdf",
+    "collaboration",
+    "real-time",
+    "editing",
+    "syncfusion",
+    "websocket",
+    "redis"
+  ],
+  "author": "Syncfusion",
+  "license": "ISC",
+  "description": "PDF Viewer Collaboration Server - Real-time collaborative editing for PDF documents using Node.js",
+  "dependencies": {
+    "@syncfusion/ej2-collaborator-server": "*",
+    "@syncfusion/ej2-pdf": "*",
+    "@xmldom/xmldom": "^0.9.12",
+    "cors": "^2.8.6",
+    "open": "^11.0.4"
+  }
+}

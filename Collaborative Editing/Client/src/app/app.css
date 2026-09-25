@@ -1,0 +1,47 @@
+/* App Component Styles */
+
+:host {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+/* PDF Viewer Container */
+ejs-pdfviewer {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Status Bar Styling */
+.status-bar {
+    padding: 10px 15px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-connected {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-loading {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.status-error {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.user-info,
+.connected-users {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

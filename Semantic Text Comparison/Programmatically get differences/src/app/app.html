@@ -1,0 +1,65 @@
+<div style="height: 100vh; width: 100%; display: flex; flex-direction: column;">
+  <!-- Control Panel with Test Buttons -->
+  <div
+    style="display: flex; gap: 8px; padding: 12px; background-color: #f5f5f5; border-bottom: 1px solid #ddd; flex-wrap: wrap; align-items: center;">
+    <!-- Main Control Buttons -->
+    <button (click)="handleCompare()"
+      style="padding: 8px 16px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500;">
+      Compare Documents
+    </button>
+    <button (click)="handleToggleHighlights()"
+      style="padding: 8px 16px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500;">
+      {{ highlightsEnabled ? 'Disable Highlights' : 'Enable Highlights' }}
+    </button>
+    <button (click)="handleToggleSync()"
+      style="padding: 8px 16px; background-color: #ffc107; color: black; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500;">
+      {{ synchronizationEnabled ? 'Disable Sync' : 'Enable Sync' }}
+    </button>
+    <button (click)="handleClearAnnotations()"
+      style="padding: 8px 16px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500;">
+      Clear Annotations
+    </button>
+
+    <!-- Separator -->
+    <div style="width: 1px; height: 24px; background-color: #ccc; margin: 0 8px;"></div>
+
+    <!-- Test Buttons -->
+    <button (click)="getDifferencesByType('Added')"
+      style="padding: 8px 16px; background-color: #17a2b8; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500;">
+      Test: Get Added
+    </button>
+    <button (click)="getDifferencesByType('Deleted')"
+      style="padding: 8px 16px; background-color: #17a2b8; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500;">
+      Test: Get Deleted
+    </button>
+    <button (click)="getDifferencesByType('Modified')"
+      style="padding: 8px 16px; background-color: #17a2b8; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500;">
+      Test: Get Modified
+    </button>
+    <button (click)="groupDifferencesByPage()"
+      style="padding: 8px 16px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500;">
+      Test: Group by Page
+    </button>
+    <button (click)="generateReport()"
+      style="padding: 8px 16px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500;">
+      Test: Generate Report
+    </button>
+  </div>
+
+  <!-- PDF Viewers Container -->
+  <div style="display: flex; flex: 1; gap: 0; overflow: hidden;">
+    <!-- Viewer 1 - Original Document -->
+    <div style="width: 50%; height: 100%; border-right: 1px solid #ccc;">
+      <ejs-pdfviewer #viewer1 id="pdfViewer1" [documentPath]="originalDocumentPath" [resourceUrl]="resourceUrl"
+        (documentLoad)="handleDocumentLoad()" style="height: 100%; width: 100%;">
+      </ejs-pdfviewer>
+    </div>
+
+    <!-- Viewer 2 - Modified Document -->
+    <div style="width: 50%; height: 100%;">
+      <ejs-pdfviewer #viewer2 id="pdfViewer2" [documentPath]="modifiedDocumentPath" [resourceUrl]="resourceUrl"
+        (documentLoad)="handleDocumentLoad()" style="height: 100%; width: 100%;">
+      </ejs-pdfviewer>
+    </div>
+  </div>
+</div>
