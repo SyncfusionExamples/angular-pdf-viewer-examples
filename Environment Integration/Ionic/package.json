@@ -28,6 +28,7 @@
     "@capacitor/status-bar": "8.0.2",
     "@ionic/angular": "^8.0.0",
     "@syncfusion/ej2-angular-pdfviewer": "^33.2.4",
+    "@syncfusion/ej2-tailwind3-theme":"*",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
