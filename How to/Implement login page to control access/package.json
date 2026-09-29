@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^19.2.18",
     "@angular/router": "^19.2.18",
     "@syncfusion/ej2-angular-pdfviewer": "^26.1.35",
+    "@syncfusion/ej2-tailwind3-theme":"*",
     "@syncfusion/ej2-angular-popups": "^30.1.40",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
