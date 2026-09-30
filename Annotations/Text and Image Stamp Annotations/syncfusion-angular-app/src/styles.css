@@ -1,0 +1,9 @@
+@import "../node_modules/@syncfusion/ej2-tailwind3-theme/styles/pdfviewer/index.css";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Hanken+Grotesk:wght@100..900&display=swap');
+    
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: 'Hanken Grotesk', sans-serif;
+}
