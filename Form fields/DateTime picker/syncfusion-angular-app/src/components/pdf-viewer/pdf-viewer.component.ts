@@ -43,8 +43,6 @@ import {
       <div class="control-section" style="margin-bottom: 8px">
         <button id="addDateField" (click)="addDateField()">Add Date Picker</button>
         <button id="addTimeField" (click)="addTimeField()">Add Time Picker</button>
-        <button id="setDateTimeMode" (click)="setDateTimeMode()">Set DateTime Picker Mode</button>
-        <button id="setTimeMode" (click)="setTimeMode()">Set Time Picker Mode</button>
       </div>
       <ejs-pdfviewer
         #pdfViewer
@@ -112,17 +110,5 @@ export class PDFViewerComponent {
         format: { script: 'AFTime_FormatEx("HH:MM")' }
       }
     });
-  }
-
-  // Switch the form designer into DateTime Picker mode so users can place fields interactively
-  setDateTimeMode(): void {
-    const viewer = this.pdfViewer as any;
-    viewer.formDesigner.setFormFieldMode('DateTime');
-  }
-
-  // Switch the form designer into Time Picker mode
-  setTimeMode(): void {
-    const viewer = this.pdfViewer as any;
-    viewer.formDesigner.setFormFieldMode('Time');
   }
 }
