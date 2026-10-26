@@ -26,6 +26,7 @@
     "@syncfusion/ej2-pdf": "*",
     "@xmldom/xmldom": "^0.9.12",
     "cors": "^2.8.6",
+    "express": "^5.2.1",
     "open": "^11.0.4"
   }
 }

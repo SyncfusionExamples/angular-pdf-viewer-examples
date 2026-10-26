@@ -6,7 +6,7 @@
     <div style="flex: 1; overflow: hidden;">
         <ejs-pdfviewer #pdfViewer id="pdfViewer" [enableCollaborativeEditing]="true" [resourceUrl]="resourceUrl"
             (resourcesLoaded)="onResourcesLoaded()" (documentChanged)="onDocumentChanged($event)"
-            style="height: 100%; width: 100%;">
+            (documentLoad)="documentLoad($event)" style="height: 100%; width: 100%;">
         </ejs-pdfviewer>
     </div>
 </div>
