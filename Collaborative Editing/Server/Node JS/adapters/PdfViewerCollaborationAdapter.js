@@ -1,5 +1,5 @@
 const { CollaborationServer } = require('@syncfusion/ej2-collaborator-server');
-const { PdfDocument, PdfFontFamily, PdfListFieldItem, PdfPage, PdfPageImportOptions, PdfPageSettings, DataFormat, PdfTextBoxField, PdfCheckBoxField, PdfComboBoxField, PdfListBoxField, PdfRadioButtonListField, PdfRotationAngle } = require('@syncfusion/ej2-pdf');
+const { PdfDocument,PdfFontFamily, PdfListFieldItem,PdfPage, PdfPageImportOptions, PdfPageSettings, DataFormat, PdfTextBoxField, PdfCheckBoxField, PdfComboBoxField, PdfListBoxField, PdfRadioButtonListField, PdfRotationAngle } = require('@syncfusion/ej2-pdf');
 const { DOMParser, XMLSerializer } = require('@xmldom/xmldom');
 
 // Make DOMParser and XMLSerializer available globally for Syncfusion PDF library
@@ -93,16 +93,16 @@ class PdfViewerCollaborationAdapter {
 
             // Load PDF document using Syncfusion PDF library
             const document = new PdfDocument(pdfBuffer);
-
+            
             if (document.pageCount === 0) {
                 console.warn('[ReplayOps] WARNING: Loaded PDF has 0 pages');
             }
 
             // Extract and validate operations
             const validOperations = this._extractValidOperations(operations);
-
+            
             if (validOperations.length > 0) {
-
+                
                 let successCount = 0;
                 let failureCount = 0;
 
@@ -236,7 +236,7 @@ class PdfViewerCollaborationAdapter {
 
             // Log operation types for debugging
             const opTypes = validOperations.map(op => op.type);
-
+        
             return validOperations;
         } catch (ex) {
             console.error('[ExtractOps] Error extracting operations:', ex.message);
@@ -288,7 +288,7 @@ class PdfViewerCollaborationAdapter {
                     break;
 
                 case 'pageorganizer':
-                case 'pageOrganizer':
+                case  'pageOrganizer':
                 case 'pageorganizeractions':
                     // Apply page rearrangement/deletion (last-write-wins)
                     await this._applyPageOrganizerActions(document, opData);
@@ -353,7 +353,7 @@ class PdfViewerCollaborationAdapter {
                 pureXfdf = this._createPureXfdf(serializedElements);
             }
             // Import pure XFDF to document
-            if (pureXfdf) {
+            if (pureXfdf) {              
                 document.importAnnotations(new TextEncoder().encode(pureXfdf), DataFormat.xfdf);
             } else {
                 console.warn('[ImportXfdf] No valid annotations found to import');
@@ -364,7 +364,7 @@ class PdfViewerCollaborationAdapter {
             throw ex;
         }
     }
-
+ 
     /**
      * Parses XFDF data into an XML document.
      * Validates XML structure and throws error if parsing fails.
@@ -377,7 +377,7 @@ class PdfViewerCollaborationAdapter {
         try {
             const parser = new DOMParser();
             const xmlDocument = parser.parseFromString(data, 'text/xml');
-
+ 
             // Check for parse errors
             const parseErrors = xmlDocument.getElementsByTagName('parsererror');
             if (parseErrors && parseErrors.length > 0) {
@@ -385,14 +385,14 @@ class PdfViewerCollaborationAdapter {
                 const errorMsg = parseError.textContent || 'Malformed XML';
                 throw new Error(`${commandName}: ${errorMsg}`);
             }
-
+ 
             return xmlDocument;
         } catch (ex) {
             console.error(`[ParseXfdf] Error parsing XFDF: ${ex.message}`);
             throw ex;
         }
     }
-
+ 
     /**
      * Gets the first direct child element with the specified name.
      *
@@ -414,7 +414,7 @@ class PdfViewerCollaborationAdapter {
         }
         return null;
     }
-
+ 
     /**
      * Gets the local or node name of an element, lowercased.
      *
@@ -425,7 +425,7 @@ class PdfViewerCollaborationAdapter {
         const localName = element.localName || element.nodeName;
         return localName ? localName.toLowerCase() : '';
     }
-
+ 
     /**
      * Removes annotations from the PDF document based on annotation data in a container element.
      * Iterates through child annotation elements and removes matching annotations from the loaded document.
@@ -453,7 +453,7 @@ class PdfViewerCollaborationAdapter {
             }
         }
     }
-
+ 
     /**
      * Removes annotations from the PDF document by matching the annotation ID.
      * Searches through all annotations on a specific page and removes the one with matching ID.
@@ -478,7 +478,7 @@ class PdfViewerCollaborationAdapter {
             }
         }
     }
-
+ 
     /**
      * Filters and returns only supported annotation element types.
      * Excludes elements that are not annotation data.
@@ -510,7 +510,7 @@ class PdfViewerCollaborationAdapter {
         }
         return elements;
     }
-
+ 
     /**
      * Serializes an XML node to string representation.
      *
@@ -520,7 +520,7 @@ class PdfViewerCollaborationAdapter {
     _serializeXmlNode(node) {
         return new XMLSerializer().serializeToString(node);
     }
-
+ 
     /**
      * Creates a pure XFDF document from annotation element strings using DOM API.
      * Constructs valid XFDF structure with annots container using proper DOM methods.
@@ -578,7 +578,7 @@ class PdfViewerCollaborationAdapter {
             throw ex;
         }
     }
-
+ 
     /**
      * Creates a blank XFDF document with proper namespace and structure.
      * Works in both browser and Node.js environments using DOMParser.
@@ -630,13 +630,13 @@ class PdfViewerCollaborationAdapter {
                         if (document.form.fieldAt(i).name === formFieldData.name) {
                             if (formFieldData.formFieldAnnotationType === 'InitialField' || formFieldData.formFieldAnnotationType === 'SignatureField') {
                                 if (Math.floor(document.form.fieldAt(i).bounds.x) === Math.floor(formFieldData.lineBound.X) &&
-                                    Math.floor(document.form.fieldAt(i).bounds.y) === Math.floor(formFieldData.lineBound.Y) &&
+                                    Math.floor(document.form.fieldAt(i).bounds.y) === Math.floor(formFieldData.lineBound.Y) && 
                                     (document.form.fieldAt(i).page._pageIndex + 1 === formFieldData.pageNumber)) {
                                     document.form.removeFieldAt(i);
                                 }
                             }
                             else if (Math.floor(document.form.fieldAt(i).bounds.x) === Math.floor(this.convertPixelToPoint(formFieldData.bounds.x)) &&
-                                Math.floor(document.form.fieldAt(i).bounds.y) === Math.floor(this.convertPixelToPoint(formFieldData.bounds.y)) &&
+                                Math.floor(document.form.fieldAt(i).bounds.y) === Math.floor(this.convertPixelToPoint(formFieldData.bounds.y)) && 
                                 (document.form.fieldAt(i).page._pageIndex + 1 === formFieldData.pageNumber)) {
                                 document.form.removeFieldAt(i);
                             }
@@ -676,7 +676,7 @@ class PdfViewerCollaborationAdapter {
      */
     async _updateFormFieldValues(document, formFieldData) {
         try {
-
+            
             // Get total form field count from document
             if (!document.form) {
                 console.warn('[UpdateValues] No form found in document');
@@ -700,7 +700,7 @@ class PdfViewerCollaborationAdapter {
                     return;
                 }
             }
-
+            
             if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
                 console.warn('[UpdateValues] No field data provided for update');
                 return;
@@ -744,7 +744,7 @@ class PdfViewerCollaborationAdapter {
                 }
 
                 const fieldValue = data[fieldDataKey];
-
+                
                 // Handle field types: TextBox, CheckBox, RadioButton, ComboBox, ListBox
                 // Skip: SignatureField, InitialField
 
@@ -760,7 +760,7 @@ class PdfViewerCollaborationAdapter {
                 else if (currentField instanceof PdfCheckBoxField) {
                     const fieldValueString = String(fieldValue).toLowerCase();
                     const isChecked = fieldValueString === 'true' || fieldValueString === 'yes' || fieldValue === true;
-
+                    
                     currentField.checked = isChecked;
                     updatedCount++;
                 }
@@ -787,7 +787,7 @@ class PdfViewerCollaborationAdapter {
                     // Try to match option text or value
                     for (let j = 0; j < itemsCount; j++) {
                         let optionText = null;
-
+                        
                         // Try itemAt() method
                         if (currentField.itemAt && currentField.itemAt(j)) {
                             optionText = currentField.itemAt(j).text;
@@ -982,7 +982,7 @@ class PdfViewerCollaborationAdapter {
             switch (fieldType.toLowerCase()) {
                 case 'textbox':
                 case 'text':
-                case 'password':
+                case 'password':    
                     field = this._createTextBoxField(page, fieldName, fieldAttributes, bounds);
                     break;
 
@@ -1210,7 +1210,7 @@ class PdfViewerCollaborationAdapter {
 
         try {
             // If already an object with x, y, width, height
-            if (typeof boundsData === 'object' && (boundsData.x !== undefined || boundsData.X !== undefined) && (boundsData.y !== undefined || boundsData.Y !== undefined)) {
+            if (typeof boundsData === 'object' && (boundsData.x !== undefined || boundsData.X !== undefined)  && (boundsData.y !== undefined || boundsData.Y !== undefined)) {
                 return {
                     x: this.convertPixelToPoint(boundsData.x !== undefined ? boundsData.x : boundsData.X),
                     y: this.convertPixelToPoint(boundsData.y !== undefined ? boundsData.y : boundsData.Y),
@@ -1280,16 +1280,16 @@ class PdfViewerCollaborationAdapter {
             }
 
             // === FIELD BEHAVIOR ===
-            if (attributes.isMultiline !== undefined) {
-                textBox.multiLine = attributes.isMultiline;
+            if (attributes.isMultiline  !== undefined) {
+                textBox.multiLine = attributes.isMultiline ;
             }
 
-            if (attributes.isReadonly !== undefined) {
-                textBox.readOnly = attributes.isReadonly;
+            if (attributes.isReadonly  !== undefined) {
+                textBox.readOnly = attributes.isReadonly ;
             }
 
-            if (attributes.isRequired !== undefined) {
-                textBox.required = attributes.isRequired;
+            if (attributes.isRequired  !== undefined) {
+                textBox.required = attributes.isRequired ;
             }
 
             if (attributes.maxLength !== undefined && attributes.maxLength > 0) {
@@ -1398,8 +1398,8 @@ class PdfViewerCollaborationAdapter {
             const checkBox = new PdfCheckBoxField(fieldName, bounds, page);
 
             // === CHECKED STATE ===
-            if (attributes.isChecked !== undefined) {
-                checkBox.checked = attributes.isChecked;
+            if (attributes.isChecked  !== undefined) {
+                checkBox.checked = attributes.isChecked ;
             }
 
             // if (attributes.value !== undefined) {
@@ -1412,8 +1412,8 @@ class PdfViewerCollaborationAdapter {
                 checkBox.readOnly = attributes.isReadonly;
             }
 
-            if (attributes.isRequired !== undefined) {
-                checkBox.required = attributes.isRequired;
+            if (attributes.isRequired  !== undefined) {
+                checkBox.required = attributes.isRequired ;
             }
 
             // === VISIBILITY ===
@@ -1710,8 +1710,8 @@ class PdfViewerCollaborationAdapter {
             // === OPTIONS/ITEMS ===
             if (attributes.options && Array.isArray(attributes.options)) {
                 for (const option of attributes.options) {
-                    const item = new PdfListFieldItem(option.itemName,
-                        option.itemValue);
+                     const item = new PdfListFieldItem(option.itemName,
+                                                                option.itemValue);
                     comboBox.addItem(item);
                 }
             }
@@ -1820,7 +1820,7 @@ class PdfViewerCollaborationAdapter {
             if (attributes.options && Array.isArray(attributes.options)) {
                 for (const option of attributes.options) {
                     const item = new PdfListFieldItem(option.itemName,
-                        option.itemValue);
+                                                                option.itemValue);
                     listBox.addItem(item);
                 }
             }
@@ -1931,7 +1931,7 @@ class PdfViewerCollaborationAdapter {
             const { PdfSignatureField, PdfStandardFont } = require('@syncfusion/ej2-pdf');
 
             let signatureField;
-
+           
             if (!attributes.lineBound) {
                 signatureField = new PdfSignatureField(page, fieldName, bounds);
             }
@@ -2225,10 +2225,10 @@ class PdfViewerCollaborationAdapter {
                 // === CRITICAL FIXES ===
                 // 1. Extract zoom value (used to scale input coordinates)
                 const zoomValue = attributes.zoomValue || 1;
-
+                
                 // 2. Get page rotation angle
                 const pageRotationAngle = page.rotation || 0;
-
+                
                 // 3. Get signature bounds (from attributes or fallback to bounds)
                 const signatureBounds = attributes.signatureBound || bounds;
                 const boundsObjects = {
@@ -2267,20 +2267,20 @@ class PdfViewerCollaborationAdapter {
                 for (let p = 0; p < stampObjects.length; p++) {
                     const val = stampObjects[p];
                     if (val.x !== undefined && val.y !== undefined) {
-                        drawingPath.addLine({ x: val.x, y: val.y }, { x: 0, y: 0 });
+                        drawingPath.addLine({x: val.x, y: val.y}, {x: 0, y: 0});
                     }
                 }
 
                 // Get rotated path for min/max calculation
                 const rotatedPath = this._getRotatedPathForMinMax(drawingPath, rotationAngle);
-
+                
                 // Calculate min/max from rotated path
                 if (rotatedPath && rotatedPath.length > 0) {
                     for (let k = 0; k < rotatedPath.length; k++) {
                         const point = rotatedPath[k];
                         const value0 = point[0];
                         const value1 = point[1];
-
+                        
                         if (minimumX === -1) {
                             minimumX = value0;
                             minimumY = value1;
@@ -2319,12 +2319,12 @@ class PdfViewerCollaborationAdapter {
                     for (let j = 0; j < stampObjects.length; j++) {
                         const value = stampObjects[j];
                         const path = value.command ? value.command.toString() : '';
-
+                        
                         if (path === 'M' && j !== 0) {
                             isNewValues = j;
                             break;
                         }
-
+                        
                         linePoints.push({
                             x: parseFloat(value.x) || 0,
                             y: parseFloat(value.y) || 0
@@ -2333,7 +2333,7 @@ class PdfViewerCollaborationAdapter {
 
                     const rotatedPoints = this._getRotatedPath(linePoints, rotationAngle);
                     linePoints = [];
-
+                    
                     for (let z = 0; z < rotatedPoints.length; z++) {
                         const rotatedPoint = rotatedPoints[z];
                         linePoints.push({
@@ -2346,12 +2346,12 @@ class PdfViewerCollaborationAdapter {
                     for (let k = 0; k < stampObjects.length; k++) {
                         const value = stampObjects[k];
                         const path = value.command ? value.command.toString() : '';
-
+                        
                         if (path === 'M' && k !== 0) {
                             isNewValues = k;
                             break;
                         }
-
+                        
                         const newX = (parseFloat(value.y) - minimumY) / newDifferenceY;
                         linePoints.push({
                             x: (parseFloat(value.x) - minimumX) / newDifferenceX + left,
@@ -2376,22 +2376,22 @@ class PdfViewerCollaborationAdapter {
                     if (rotationAngle !== 0) {
                         // Rotated case
                         const pathCollection = [];
-
+                        
                         for (let t = isNewValues; t < stampObjects.length; t++) {
                             const value = stampObjects[t];
                             const path = value.command ? value.command.toString() : '';
-
+                            
                             if (path === 'M' && t !== isNewValues) {
                                 pathCollection.push([...linePoints]);
                                 linePoints = [];
                             }
-
+                            
                             linePoints.push({
                                 x: parseFloat(value.x) || 0,
                                 y: parseFloat(value.y) || 0
                             });
                         }
-
+                        
                         if (linePoints.length > 0) {
                             pathCollection.push(linePoints);
                         }
@@ -2399,10 +2399,10 @@ class PdfViewerCollaborationAdapter {
                         for (let w = 0; w < pathCollection.length; w++) {
                             const pointsCollections = pathCollection[w];
                             linePoints = [];
-
+                            
                             if (pointsCollections.length > 0) {
                                 const rotatedPoints = this._getRotatedPath(pointsCollections, rotationAngle);
-
+                                
                                 for (let z = 0; z < rotatedPoints.length; z++) {
                                     const rotatedPoint = rotatedPoints[z];
                                     linePoints.push({
@@ -2410,7 +2410,7 @@ class PdfViewerCollaborationAdapter {
                                         y: pageHeight - (rotatedPoint[1] - minimumY) / newDifferenceY - top
                                     });
                                 }
-
+                                
                                 annotation.inkPointsCollection.push(linePoints);
                             }
                         }
@@ -2419,19 +2419,19 @@ class PdfViewerCollaborationAdapter {
                         for (let r = isNewValues; r < stampObjects.length; r++) {
                             const value = stampObjects[r];
                             const path = value.command ? value.command.toString() : '';
-
+                            
                             if (path === 'M' && r !== isNewValues) {
                                 annotation.inkPointsCollection.push(linePoints);
                                 linePoints = [];
                             }
-
+                            
                             const newX = (parseFloat(value.y) - minimumY) / newDifferenceY;
                             linePoints.push({
                                 x: (parseFloat(value.x) - minimumX) / newDifferenceX + left,
                                 y: pageHeight - newX - top
                             });
                         }
-
+                        
                         if (linePoints.length > 0) {
                             annotation.inkPointsCollection.push(linePoints);
                         }
@@ -2485,7 +2485,7 @@ class PdfViewerCollaborationAdapter {
     _adjustBoundsForPageRotation(bounds, pageHeight, pageWidth, pageRotationAngle) {
         try {
             const normalizedAngle = ((pageRotationAngle || 0) % 360) / 90;
-
+            
             if (normalizedAngle === 1 || normalizedAngle === 3) {
                 // 90° or 270° rotation
                 if (normalizedAngle === 1) {
@@ -2531,11 +2531,11 @@ class PdfViewerCollaborationAdapter {
     _calculateInkRotationAngle(pageRotationAngle) {
         try {
             const normalizedAngle = ((pageRotationAngle || 0) % 360);
-
+            
             if (normalizedAngle === 90 || normalizedAngle === 1) return 90;
             if (normalizedAngle === 180 || normalizedAngle === 2) return 180;
             if (normalizedAngle === 270 || normalizedAngle === 3) return 270;
-
+            
             return 0;
         } catch (ex) {
             console.warn('[CalculateInkRotationAngle] Error:', ex.message);
@@ -2629,11 +2629,11 @@ class PdfViewerCollaborationAdapter {
     _getRotateAngle(pageRotation) {
         try {
             const normalizedAngle = ((pageRotation || 0) % 360);
-
+            
             if (normalizedAngle === 90 || normalizedAngle === 1) return 90;
             if (normalizedAngle === 180 || normalizedAngle === 2) return 180;
             if (normalizedAngle === 270 || normalizedAngle === 3) return 270;
-
+            
             return 0;
         } catch (ex) {
             console.warn('[GetRotateAngle] Error:', ex.message);
@@ -2658,8 +2658,8 @@ class PdfViewerCollaborationAdapter {
                 }
             } else if (pageOrganizerData.action === 'reorder' || pageOrganizerData.action === 'rearrange') {
                 // Reorder page: Move page from sourceIndex to targetIndex
-                const sourceIndex = pageOrganizerData.sourcePageIndex !== undefined
-                    ? pageOrganizerData.sourcePageIndex
+                const sourceIndex = pageOrganizerData.sourcePageIndex !== undefined 
+                    ? pageOrganizerData.sourcePageIndex 
                     : pageOrganizerData.originalPageIndex;
                 const targetIndex = pageOrganizerData.targetIndex;
 
@@ -2682,7 +2682,7 @@ class PdfViewerCollaborationAdapter {
                 try {
                     // Build the complete page order array for reorderPages API
                     // This is cleaner than manual array manipulation
-
+                    
                     // Step 1: Create array of all current page indices [0, 1, 2, ..., pageCount-1]
                     const pageIndices = Array.from({ length: document.pageCount }, (_, i) => i);
 
@@ -2712,7 +2712,7 @@ class PdfViewerCollaborationAdapter {
                     console.error('[PageOrganizer] Stack:', reorderError.stack);
                     throw reorderError;
                 }
-            } else if (pageOrganizerData.action === 'rotate') {
+            } else if(pageOrganizerData.action === 'rotate') {
                 const page = document.getPage(pageOrganizerData.originalPageIndex);
                 if (pageOrganizerData.rotateAngle === 90) {
                     page.rotation = PdfRotationAngle.angle90;
@@ -2721,12 +2721,12 @@ class PdfViewerCollaborationAdapter {
                 } else if (pageOrganizerData.rotateAngle === 270) {
                     page.rotation = PdfRotationAngle.angle270;
                 }
-            } else if (pageOrganizerData.action === 'insert') {
+            } else if(pageOrganizerData.action === 'insert') {
                 let pageSettings2 = new PdfPageSettings();
                 pageSettings2.width = pageOrganizerData.pageSize.width;
                 pageSettings2.height = pageOrganizerData.pageSize.height;
                 document.addPage(pageOrganizerData.targetIndex, pageSettings2);
-            } else if (pageOrganizerData.action === 'copy') {
+            } else if(pageOrganizerData.action === 'copy') {
                 // Reorder pages
                 let options = new PdfPageImportOptions();
                 // Sets the target page index to import

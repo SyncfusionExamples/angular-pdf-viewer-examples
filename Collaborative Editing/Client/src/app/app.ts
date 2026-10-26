@@ -17,7 +17,8 @@ import { CollaborationClient } from '@syncfusion/ej2-collaborator';
 
 const userList = ['RIO', 'JOHN', 'MAXY', 'SHAI', 'SRI'];
 const currentUserName = userList[Math.floor(Math.random() * userList.length)];
-const SERVICE_URL = 'http://localhost:8081/';
+//REPLACE THIS WITH SERVICE URL CURRENTLY RUNNING
+const SERVICE_URL = 'https://localhost:5001/';
 
 @Component({
   selector: 'app-root',
@@ -135,7 +136,13 @@ export class App implements OnInit, OnDestroy {
       throw error;
     }
   }
-
+  /**
+   * Applies pending operations to the document after it has been loaded.
+   * This handles applying initial state snapshots (annotations, form fields, page organizer).
+   */
+  public documentLoad = (args: any) => {
+    this.adapterRef?.updatePendingOperations();
+  };
   /**
    * Fetches the current collaborative document from the server and loads it into the viewer
    */
@@ -231,7 +238,10 @@ export class App implements OnInit, OnDestroy {
       // Step 2: Create and configure CollaborationClient
       this.clientRef = new CollaborationClient(this.adapterRef, {
         serviceUrl: SERVICE_URL,
-        connectionType: 'websocket',
+        // USE BELOW IF YOU USE NODE JS WEB SERVICE
+        // connectionType: 'websocket',
+        // USE BELOW IF YOU USE CORE WEB SERVICE
+        connectionType: 'signalr',
         currentUser: this.currentUser,
         onUserJoined: (user: any) => {
           console.log('[App] User joined collaboration:', user);

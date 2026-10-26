@@ -19,14 +19,14 @@ class PdfStorageService {
          * Base storage path for PDF files
          * Default: project root/storage/pdfs
          */
-        this.baseStoragePath = baseStoragePath || 
+        this.baseStoragePath = baseStoragePath ||
             path.join(__dirname, '..', 'storage', 'pdfs');
 
         /**
          * Default PDF path for fallback
-         * Default: wwwroot/PDF/pdf-succinctly.pdf
+         * Default: wwwroot/PDF/form-designer1.pdf
          */
-        this.defaultPdfPath = defaultPdfPath || 
+        this.defaultPdfPath = defaultPdfPath ||
             path.join(__dirname, '..', 'wwwroot', 'PDF', 'pdf-succinctly.pdf');
 
         // Ensure base storage directory exists
@@ -66,7 +66,7 @@ class PdfStorageService {
                 };
             }
 
-           
+
 
             if (this._fileExists(this.defaultPdfPath)) {
                 const buffer = await this._readFileAsync(this.defaultPdfPath);
@@ -85,7 +85,7 @@ class PdfStorageService {
 
             // Neither room-specific nor default PDF found
             console.error(`[PdfStorageService] PDF not found - room: ${pdfPath}, default: ${this.defaultPdfPath}`);
-            
+
             return {
                 success: false,
                 error: `PDF document not found: ${resolvedFileName}`,

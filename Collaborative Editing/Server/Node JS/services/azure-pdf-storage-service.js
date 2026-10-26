@@ -29,7 +29,7 @@ class AzurePdfStorageService {
         
         // Local fallback for default PDF
         this.defaultPdfPath = options.defaultPdfPath || 
-            path.join(__dirname, '..', 'wwwroot', 'PDF', 'pdf-succinctly.pdf');
+            path.join(__dirname, '..', 'wwwroot', 'PDF', 'form-designer1.pdf');
 
         if (!this.connectionString) {
             throw new Error(
