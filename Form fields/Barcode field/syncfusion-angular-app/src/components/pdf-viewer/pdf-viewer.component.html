@@ -1,0 +1,111 @@
+<div class="pdf-viewer-container">
+  <div class="toolbar-actions">
+    <!-- Programmatic creation -->
+    <div class="action-group">
+      <h4>Add barcode field programmatically</h4>
+      <button id="addPdf417Barcode" (click)="addPdf417Barcode()">Add PDF417</button>
+      <button id="addQrCodeBarcode" (click)="addQrCodeBarcode()">Add QR Code</button>
+      <button id="addDataMatrixBarcode" (click)="addDataMatrixBarcode()">Add Data Matrix</button>
+      <button id="enableBarcodeMode" (click)="enableBarcodeMode()">Set Barcode Field Mode</button>
+    </div>
+
+    <!-- Settings -->
+    <div class="action-group settings-group">
+      <h4>Barcode field settings</h4>
+      <label class="field">
+        <span>Symbology</span>
+        <select id="symbology" [(ngModel)]="settings.symbology" (ngModelChange)="onSymbologyChange()">
+          <option *ngFor="let item of symbologies" [value]="item">{{ item }}</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>X-Dimension</span>
+        <input id="xDimension" type="number" min="1" [(ngModel)]="settings.xDimension" />
+      </label>
+      <label class="field">
+        <span>Error correction</span>
+        <select id="errorCorrectionLevel" [(ngModel)]="settings.errorCorrectionLevel" [disabled]="!isErrorLevelEnabled">
+          <option *ngFor="let item of errorLevels" [value]="item">{{ item }}</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>Value format</span>
+        <select id="valueFormat" [(ngModel)]="settings.valueFormat">
+          <option *ngFor="let item of valueFormats" [value]="item">{{ item }}</option>
+        </select>
+      </label>
+      <label class="field checkbox-field">
+        <input id="includeFieldNames" type="checkbox" [(ngModel)]="settings.includeFieldNames" />
+        <span>Include field names</span>
+      </label>
+      <label class="field checkbox-field">
+        <input id="compressData" type="checkbox" [(ngModel)]="settings.compressData" />
+        <span>Compress data</span>
+      </label>
+      <label class="field">
+        <span>Custom value</span>
+        <input id="customValue" type="text" [(ngModel)]="settings.customValue" [disabled]="!isCustomValueEnabled" />
+      </label>
+      <label class="field">
+        <span>Caption</span>
+        <input id="caption" type="text" [(ngModel)]="settings.caption" />
+      </label>
+      <label class="field">
+        <span>Linked fields</span>
+        <input id="linkedFields" type="text" placeholder="Text1, Text2" [(ngModel)]="linkedFields" />
+      </label>
+      <button id="applyViewerSettings" (click)="applyViewerSettings()">Apply as Viewer Defaults</button>
+    </div>
+
+    <!-- Editing -->
+    <div class="action-group">
+      <h4>Edit barcode field</h4>
+      <label class="field">
+        <span>Field</span>
+        <select id="selectedField" [(ngModel)]="selectedFieldId">
+          <option *ngFor="let field of barcodeFields" [value]="field.id">
+            {{ field.name }} ({{ field.symbology }})
+          </option>
+          <option *ngIf="!barcodeFields.length" value="">No barcode field</option>
+        </select>
+      </label>
+      <button id="updateSymbologyPdf417" [disabled]="!selectedFieldId" (click)="updateSymbology('PDF417')">
+        Set PDF417
+      </button>
+      <button id="updateSymbologyQrCode" [disabled]="!selectedFieldId" (click)="updateSymbology('QRCode')">
+        Set QR Code
+      </button>
+      <button id="updateSymbologyDataMatrix" [disabled]="!selectedFieldId" (click)="updateSymbology('DataMatrix')">
+        Set Data Matrix
+      </button>
+      <button id="updateErrorCorrection" [disabled]="!selectedFieldId" (click)="updateErrorCorrectionLevel(settings.errorCorrectionLevel)">
+        Set Error Correction
+      </button>
+      <button id="updateXDimension" [disabled]="!selectedFieldId" (click)="updateXDimension(settings.xDimension)">
+        Set X-Dimension
+      </button>
+      <button id="updateValueFormat" [disabled]="!selectedFieldId" (click)="updateValueFormat(settings.valueFormat)">
+        Set Value Format
+      </button>
+      <button id="updateCustomValue" [disabled]="!selectedFieldId" (click)="updateCustomValue(settings.customValue)">
+        Set Custom Value
+      </button>
+      <button id="updateCaption" [disabled]="!selectedFieldId" (click)="updateCaption(settings.caption)">
+        Set Caption
+      </button>
+      <button id="applySettingsToField" [disabled]="!selectedFieldId" (click)="updateSelectedField()">
+        Apply All Settings
+      </button>
+      <button id="deleteSelectedField" [disabled]="!selectedFieldId" (click)="deleteSelectedField()">Delete Field</button>
+    </div>
+  </div>
+
+  <ejs-pdfviewer
+    #pdfViewer
+    id="container"
+    [documentPath]="documentPath"
+    [resourceUrl]="resourceUrl"
+    (documentLoad)="onDocumentLoad()"
+    style="height: 680px; display: block">
+  </ejs-pdfviewer>
+</div>
