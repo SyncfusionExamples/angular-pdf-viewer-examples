@@ -47,10 +47,6 @@
   cursor: default;
 }
 
-.settings-group {
-  max-width: 520px;
-}
-
 .field {
   display: flex;
   align-items: center;
@@ -63,23 +59,9 @@
   white-space: nowrap;
 }
 
-.field select,
-.field input[type='text'],
-.field input[type='number'] {
+.field select {
   padding: 4px 6px;
   font-size: 12px;
   border: 1px solid #b1b1b1;
   border-radius: 4px;
-}
-
-.field input[type='number'] {
-  width: 70px;
-}
-
-.field input[type='text'] {
-  width: 150px;
-}
-
-.checkbox-field {
-  gap: 4px;
 }
