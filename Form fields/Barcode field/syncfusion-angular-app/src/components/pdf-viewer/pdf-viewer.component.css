@@ -1,0 +1,67 @@
+.pdf-viewer-container {
+  margin: 30px 90px;
+}
+
+.toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.action-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+}
+
+.action-group h4 {
+  width: 100%;
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #424242;
+}
+
+.action-group button {
+  padding: 6px 12px;
+  font-size: 13px;
+  color: #1b1b1b;
+  background-color: #ffffff;
+  border: 1px solid #b1b1b1;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.action-group button:hover:not(:disabled) {
+  background-color: #e8f1fb;
+  border-color: #0b6cbd;
+}
+
+.action-group button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #424242;
+}
+
+.field > span {
+  white-space: nowrap;
+}
+
+.field select {
+  padding: 4px 6px;
+  font-size: 12px;
+  border: 1px solid #b1b1b1;
+  border-radius: 4px;
+}

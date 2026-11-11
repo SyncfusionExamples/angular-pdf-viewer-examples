@@ -1,0 +1,47 @@
+<div class="pdf-viewer-container">
+  <div class="toolbar-actions">
+    <!-- Programmatic creation -->
+    <div class="action-group">
+      <h4>Add barcode field programmatically</h4>
+      <button id="addPdf417Barcode" (click)="addPdf417Barcode()">Add PDF417</button>
+      <button id="addQrCodeBarcode" (click)="addQrCodeBarcode()">Add QR Code</button>
+      <button id="addDataMatrixBarcode" (click)="addDataMatrixBarcode()">Add Data Matrix</button>
+      <button id="enableBarcodeMode" (click)="enableBarcodeMode()">Set Barcode Field Mode</button>
+    </div>
+
+    <!-- Editing -->
+    <div class="action-group">
+      <h4>Edit barcode field</h4>
+      <label class="field">
+        <span>Field</span>
+        <select id="selectedField" [(ngModel)]="selectedFieldId">
+          <option *ngFor="let field of barcodeFields" [value]="field.id">
+            {{ field.name }} ({{ field.symbology }})
+          </option>
+          <option *ngIf="!barcodeFields.length" value="">No barcode field</option>
+        </select>
+      </label>
+      <button id="updateSymbologyPdf417" [disabled]="!selectedFieldId" (click)="updateSymbology('PDF417')">
+        Set PDF417
+      </button>
+      <button id="updateSymbologyQrCode" [disabled]="!selectedFieldId" (click)="updateSymbology('QRCode')">
+        Set QR Code
+      </button>
+      <button id="updateSymbologyDataMatrix" [disabled]="!selectedFieldId" (click)="updateSymbology('DataMatrix')">
+        Set Data Matrix
+      </button>
+      <button id="deleteSelectedField" [disabled]="!selectedFieldId" (click)="deleteSelectedField()">Delete Field</button>
+    </div>
+  </div>
+
+  <ejs-pdfviewer
+    #pdfViewer
+    id="container"
+    [documentPath]="documentPath"
+    [resourceUrl]="resourceUrl"
+    (documentLoad)="refreshBarcodeFields()"
+    (formFieldAdd)="refreshBarcodeFields()"
+    (formFieldRemove)="refreshBarcodeFields()"
+    style="height: 680px; display: block">
+  </ejs-pdfviewer>
+</div>
