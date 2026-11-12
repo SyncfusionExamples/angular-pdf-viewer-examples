@@ -1,0 +1,47 @@
+<div class="pdf-viewer-container">
+  <div class="toolbar-actions">
+    <!-- Programmatic creation -->
+    <div class="action-group">
+      <h4>Add button field programmatically</h4>
+
+      <button id="addButtonField" (click)="addButtonField()">
+        Add Button Field
+      </button>
+
+      <button id="enableButtonMode" (click)="enableButtonMode()">
+        Enable Button Designer Mode
+      </button>
+    </div>
+
+    <!-- Editing -->
+    <div class="action-group">
+      <h4>Edit button field</h4>
+
+      <label class="field">
+        <span>Field</span>
+        <select id="selectedField" [(ngModel)]="selectedFieldId">
+          <option *ngFor="let field of buttonFields" [value]="field.id">
+            {{ field.name }}
+          </option>
+
+          <option *ngIf="!buttonFields.length" value="">
+            No button field
+          </option>
+        </select>
+      </label>
+
+      <button id="editButtonField" [disabled]="!selectedFieldId" (click)="editButtonField()">
+        Edit Button Field
+      </button>
+
+      <button id="deleteButtonField" [disabled]="!selectedFieldId" (click)="deleteButtonField()">
+        Delete Button Field
+      </button>
+    </div>
+  </div>
+
+  <ejs-pdfviewer #pdfViewer id="container" [documentPath]="documentPath" [resourceUrl]="resourceUrl"
+    (documentLoad)="refreshButtonFields()" (formFieldAdd)="refreshButtonFields()"
+    (formFieldRemove)="refreshButtonFields()" style="height: 680px; display: block">
+  </ejs-pdfviewer>
+</div>
