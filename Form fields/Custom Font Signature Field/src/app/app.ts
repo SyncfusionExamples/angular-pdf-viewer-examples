@@ -14,6 +14,7 @@ import { PdfViewerModule, LinkAnnotationService, BookmarkViewService,
                TextSearchService, TextSelectionService, PrintService,
                FormDesignerService, FormFieldsService, AnnotationService, PageOrganizerService],
   template: `
+  <div style="margin-top: 100px">
     <ejs-pdfviewer
       id="pdfViewer"
       [documentPath]="documentPath"
@@ -23,6 +24,7 @@ import { PdfViewerModule, LinkAnnotationService, BookmarkViewService,
       [handWrittenSignatureSettings]="handWrittenSignatureSettings"
       style="height:640px; display:block">
     </ejs-pdfviewer>
+    </div>
   `
 })
 export class App {
