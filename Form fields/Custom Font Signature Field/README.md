@@ -1,59 +1,83 @@
-# PdfviewerSignatureDialogSettings
+# Custom Font Signature Field
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.3.
+This sample demonstrates how to configure custom fonts for signature fields in the PDF Viewer component.
 
-## Development server
+## Features
+- **Custom Signature Fonts:** Configure multiple fonts (Allura, Tangerine, Sacramento, Inspiration) for signature fields
+- **Multiple Display Modes:** Support for both Draw and Text modes for signatures
+- **Initial Settings:** Configure fonts for initial/signature fields
+- **Hand-Written Signature:** Support for hand-written signature settings
 
-To start a local development server, run:
+## Configuration Details
 
-```bash
-ng serve
+The sample uses the following key configurations in the component:
+
+```typescript
+signatureSettings = {
+  signatureDialogSettings: {
+    displayMode: DisplayMode.Draw | DisplayMode.Text,
+  },
+  typeSignatureFonts: ['Allura', 'Tangerine', 'Sacramento', 'Inspiration'],
+};
+
+initialSettings = {
+  initialDialogSettings: {
+    displayMode: DisplayMode.Draw | DisplayMode.Text,
+  },
+  typeInitialFonts: ['Allura', 'Tangerine', 'Sacramento', 'Inspiration'],
+};
+
+handWrittenSignatureSettings = {
+  signatureDialogSettings: {
+    displayMode: DisplayMode.Draw | DisplayMode.Text,
+  },
+  initialDialogSettings: {
+    displayMode: DisplayMode.Draw | DisplayMode.Text,
+  },
+  typeSignatureFonts: ['Allura', 'Tangerine', 'Sacramento', 'Inspiration'],
+};
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+# Running the Angular Sample
 
-## Code scaffolding
+### General Setup Steps
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+To run any Angular PDF Viewer sample:
 
+**Step 1:** Open a terminal or command prompt.
+
+**Step 2:** Navigate to the sample directory (e.g., `Form fields/Custom Font Signature Field`).
 ```bash
-ng generate component component-name
+cd "Form fields/Custom Font Signature Field"
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+**Step 3:** Install the necessary dependencies specified in the package.json file.
 ```bash
-ng generate --help
+npm install
 ```
 
-## Building
-
-To build the project run:
-
+**Step 4:** Once the installation is complete, start the Angular development server.
 ```bash
-ng build
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+The application will automatically open in your default browser at `http://localhost:4200/`.
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Running the Custom Font Signature Field Sample
 
 ```bash
-ng test
+cd "Form fields/Custom Font Signature Field"
+npm install
+npm start
 ```
 
-## Running end-to-end tests
+Navigate to `http://localhost:4200/` and interact with the signature fields to see the custom fonts in action.
 
-For end-to-end (e2e) testing, run:
+#### Building for Production
 
+To build the project for production:
 ```bash
-ng e2e
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+The compiled artifacts will be stored in the `dist/` directory.
